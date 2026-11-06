@@ -1,5 +1,5 @@
 {
-  "name": "app",
+  "name": "command-center",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,12 +9,20 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "fast-xml-parser": "^5.12.0",
+    "geist": "^1.9.1",
+    "ical.js": "^2.2.1",
+    "imapflow": "^2.11.0",
+    "lucide-react": "^1.69.0",
+    "mailparser": "^3.14.2",
     "next": "16.4.5",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "swr": "^2.5.1"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",
+    "@types/mailparser": "^3.9.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

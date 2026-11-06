@@ -1,0 +1,258 @@
+Method: dual-agent (A: design-review sub-agent · B: detector/browser sub-agent)
+
+# Impeccable critique: Personal Command Center
+
+- **Target:** `app/page.tsx` and its components, viewed live at http://localhost:3000.
+- **Capture time:** Nov 6, 2026, about 11:19 AM MT.
+- **Viewports checked:** 1920×1080 (primary), 2560×1440, 1280 and 390, in both dark and light themes.
+- **Mode:** Operate (dashboard).
+- **Design context:** PRODUCT.md, DESIGN.md and `.impeccable/design.json`.
+- **Data at capture time:**
+  - Weather: 8 locations, all overcast, 40–53°F, no NWS alerts.
+  - Snow: 0.0" forecast at every resort.
+  - Markets: open.
+  - Drive: Keystone returned "unavailable".
+  - News: the Denver Post feed returned HTTP 403.
+
+## Design Health Score
+
+| # | Heuristic | Score | Key issue |
+|---|---|---|---|
+| 1 | Visibility of system status | 3 | Every widget shows its Updated time, a refresh spinner and a stale banner. The Daily briefing has none of these: no source, no time, no stale flag. Times are absolute ("Updated 11:13 AM"), so on a page left open all day Brian has to work out each value's age himself. |
+| 2 | Match system / real world | 3 | °F, MT and plain sentences throughout. The temperature-comparison bars start at −5°F (`WeatherWidget.tsx:110`), so 40° and 53° look nearly the same length. Single-letter weekdays (S/S, T/T) are ambiguous. |
+| 3 | User control and freedom | 2 | The weather detail modal can't be closed with Esc. Removing a ticker or topic takes one click on an × and can't be undone. Widgets can't be hidden or collapsed. |
+| 4 | Consistency and standards | 3 | The Widget shell is consistent across panels. But three control styles do similar jobs (chips, segmented controls, link pills), and icon colours break the Meaning-Only Color Rule: the Markets icon is green (`StocksWidget.tsx:33`), YouTube is coral (`YouTubeWidget.tsx:64`) and weather icons are accent blue. |
+| 5 | Error prevention | 2 | The × deletes instantly. An invalid ticker is silently dropped (`StocksWidget.tsx:26-27`). The watchlist × is hidden until hover. |
+| 6 | Recognition rather than recall | 3 | Labels are good. Weather cards don't show that they open a detail view. The Front Range / mountains split depends on a small legend. |
+| 7 | Flexibility and efficiency | 2 | No refresh-all, no shortcuts, no way to reorder or hide panels, no large-type desk mode. |
+| 8 | Aesthetic and minimalist design | 2 | Genesee's temperature appears 3 times and the temperature gap twice. Snow takes 789px to say 0.0". YouTube takes 2149px of a 5108px page. The snow panel has 22 link pills. |
+| 9 | Error recovery | 3 | Error and setup boxes are clear. But "Keystone unavailable" gives no reason or retry, and "Denver Post (HTTP 403…)" is a raw technical string. |
+| 10 | Help and documentation | 3 | The methodology footnotes are excellent. Terms like RH, mid-mtn and proxy have no gloss, but are mostly clear. |
+| **Total** | | **26/40** | **Acceptable** (the upper edge of the band) |
+
+## Design Specificity Verdict
+
+### LLM assessment
+The content is specific to Brian; the visual form is generic.
+
+**What is specific:**
+- Genesee as home base and the four I-70 resorts.
+- Mid-mountain snow model points.
+- "Model estimate" vs "forecast" labels.
+- "via SPY ETF (proxy)".
+- "if leaving at update time".
+- "Model analysis, not station observations".
+
+Few dashboards are this honest about their data.
+
+**What is generic:**
+- The page is a stack of identical `rounded-2xl` graphite cards, each with an icon and title header.
+- The weather grid is 4 equal tiles across.
+- The briefing has a gradient and a Sparkles "AI" glyph.
+
+Nothing in the composition reflects Brian's geography (home → Front Range → the I-70 mountains by elevation), the morning-then-all-day rhythm, or the season. Remove the place names and it could be any dark starter dashboard.
+
+The North Star in DESIGN.md, "The Morning Instrument Panel", is not realised. An instrument panel has one primary gauge; this page has eight equal ones.
+
+### Deterministic scan
+**CLI:** `impeccable detect --json app components` returned **0 findings**. The CLI doesn't see the problems, because they live in computed styles.
+
+**Browser overlay (live DOM):**
+
+| Rule | Dark theme | Light theme | Notes |
+|---|---|---|---|
+| low-contrast | 90 | 119 | |
+| undersized-functional-text | 36 | 36 | 10px day-range ends and YouTube durations |
+| tiny-text | 11 | 11 | 11px estimate/forecast labels, drive note, quota counter |
+| nested-cards | 8 | 8 | Snow resort cards and Markets index tiles inside panels |
+| unbalanced-heading | 2 | 2 | Long YouTube titles |
+| straggler | 1 | 1 | A one-word last line on the briefing headline |
+| **Total** | **149** | **178** | |
+
+**Detector vs. design review:**
+- **Where they agree:**
+  - Almost every low-contrast hit is the single `--faint` token: #5b606b in dark (2.87:1 on panels) and #9aa0ad in light (2.43–2.62:1).
+  - That token carries the briefing keys, snow cell headers, quote timestamps, news summaries and every widget footnote. This is the same provenance text the design review flagged.
+- **What only the detector caught:** light-theme Powder Cyan forecast values and labels at 4.08:1 (20 elements), and light `--warn` amber at 3.64:1 (stale and "unavailable" text).
+- **Judged intentional or low-value:**
+  - The 10–11px sizes and nested stat tiles are specified in DESIGN.md (the Micro type style and stat tile component). They are kept as design decisions, but an 11px floor is recommended.
+  - Heading balance and the straggler depend on live content; adding `text-wrap: balance` / `pretty` is cheap.
+- **Likely detector artefacts:** two empty-text nodes in light theme.
+
+### Visual overlays
+The overlay was injected at runtime in the built-in browser's "[Human] Command Center" tab and shows the dark-theme results. A reload clears it. No source files were changed.
+
+## Overall Impression
+
+The engineering and honesty layer is the best part of the product: every widget degrades on its own, and estimates are never passed off as measurements.
+
+The design layer hasn't caught up with the product brief. The first screen spends its best space on a greeting and eight equal tiles. The one number that matters (Genesee now) never wins. Half the morning decisions (snow, markets, drive) are below the fold on a 1080p monitor. The page ends on two screens of low-view YouTube videos.
+
+**Biggest opportunity:** a real "Home now" hero, plus a layout that puts every morning decision on one 1080p screen.
+
+## What's Working
+
+1. **Data-honesty labelling is first-rate.**
+   - Past snow (estimate) and future snow (forecast) differ in both colour and text (`SnowWidget.tsx:83, 89, 101`).
+   - Each quote carries its own timestamp, and index ETFs are labelled as proxies (`StocksWidget.tsx:56, 59, 111`).
+   - Model and observation are spelled out in footnotes.
+2. **The Widget shell is robust.** Loading, error, needs-setup, empty, stale banner and footnote states all live in one component (`Widget.tsx:22-93`). The Denver Post 403 and the Keystone drive failure each degraded locally, as designed.
+3. **The type and token system is disciplined.**
+   - Geist Mono with tabular figures for every reading.
+   - A restrained neutral ramp.
+   - A light theme on the same tokens.
+   - No theme flash (`layout.tsx:11`).
+
+## Priority Issues
+
+### [P1] Home doesn't win the first glance, and the 1080p first screen is spent on low-value content
+
+**What:**
+- At 1920×1080 the first screen holds:
+  - the greeting, which is the largest text on the page and answers nothing;
+  - the briefing;
+  - 8 identical weather tiles with 36px temperatures;
+  - a redundant comparison chart.
+- Snow, Markets and Drive start below the fold, at y≈1086 and y≈1895.
+- Genesee is styled exactly like Beaver Creek (`WeatherWidget.tsx:44-46, 85, 94`), or appears as a 14px briefing sentence (`Briefing.tsx:38`).
+- At 2560×1440 the 1500px cap (`page.tsx:15`) leaves about 530px of empty gutter on each side, yet the page still scrolls.
+
+**Why it matters:** this breaks Product Principles 1 (home first) and 3 (glanceable from across the desk). Scrolling counts as interaction, so the page also misses the "without clicking" goal.
+
+**Fix:**
+- Build a Genesee hero:
+  - temperature at 96–120px mono, plus condition, feels-like, hi/lo and wind/gust;
+  - next-precipitation time and sunrise/sunset;
+  - NWS alert state inline;
+  - provenance, e.g. "Open-Meteo model · 9 min ago".
+- Collapse the other 7 places into a compact two-group table: "Front Range", and "I-70 mountains" ordered by elevation.
+- Delete the comparison chart, or rebuild it as a dot plot on a real temperature scale.
+- Fold the greeting into the date line.
+- At ≥1600px, use 3 columns (Home | Snow + Drive | Markets) so every morning decision fits in 1080px.
+- Relax the 1500px cap on wide monitors.
+
+**Commands:** `/impeccable layout`, `/impeccable bolder`, `/impeccable distill`
+
+### [P1] The Daily briefing, the first content block, breaks the data-honesty contract
+
+**What:**
+- No source or time on any line.
+- If weather comes back `stale: true`, "Genesee now" still reads as live.
+- It always polls at `REFRESH.stocksOpen`, whatever the market state (`Briefing.tsx:29`).
+- The Sparkles icon and gradient (`Briefing.tsx:88-89`) signal "AI-written" when it isn't.
+
+**Why it matters:** CLAUDE.md makes labelling every value's source and time non-negotiable, and this is the block Brian trusts most. The fake-AI cue will also become confusing once the planned Claude-written briefing exists.
+
+**Fix:**
+- Add a small trailing age to each line ("· 9 min · model").
+- Turn a line amber with "older data from 10:42" when its source is stale.
+- Use the market-aware refresh interval.
+- Use a neutral icon (or none) and a flat surface.
+- Rename the line to "Home · now (model)".
+
+**Commands:** `/impeccable clarify`, `/impeccable harden`
+
+### [P1] The phone layout overflows: the page renders about 544px wide at a 390px viewport
+
+**What:**
+- The page grid (`page.tsx:18`) has no explicit columns below `xl`, so it uses implicit `auto` tracks.
+- The News tab row (`NewsWidget.tsx:33`, `shrink-0` pills) has a min-content width of about 488px.
+- That width forces every widget wider than the screen. Weather cards are clipped on the right.
+
+**Why it matters:** the phone is a stated secondary context, and the Vercel link may be shared with family.
+
+**Fix:** add `grid-cols-1` to the grid, `min-w-0` to the grid children, and `min-w-0` / `max-w-full` to the tab scroller.
+
+**Command:** `/impeccable adapt`
+
+### [P2] Provenance and meta text fails contrast at 10–12px (both assessments; about 90 dark / 119 light detector hits)
+
+**What:**
+- `--faint` (`globals.css:11, 26`): 2.87:1 in dark, 2.43–2.62:1 in light.
+- Light `--warn` #b7791f: 3.64:1.
+- Light Powder Cyan #1b84c4: 4.08:1, used on forecast values and labels.
+
+**Why it matters:**
+- The Quiet Provenance Rule in DESIGN.md says this text "must stay legible".
+- The accessibility section of PRODUCT.md names it specifically.
+- It is unreadable from about 1m away.
+
+**Fix:**
+- Dark `--faint` → about #80858f (≈4.9:1).
+- Light `--faint` → about #6b7180 (≈4.9:1).
+- Light `--warn` → about #9a6512.
+- Darken light-theme Powder Cyan to ≥4.5:1.
+- Set an 11px floor (no `text-[10px]`).
+
+The token changes alone clear about 90% of the detector findings.
+
+**Commands:** `/impeccable audit`, `/impeccable typeset`
+
+### [P2] Low-value panels dominate when nothing is happening
+
+**What:**
+- **YouTube:** 2149px (42% of the page), sorted only by recency, with 14 of 26 videos at 5 views or fewer.
+- **Snow:** four full cards of 0.0", each with 7 number cells, 14 bars and 5 link pills.
+
+**Why it matters:** attention goes to noise, and by the peak-end rule the page's last impression is junk.
+
+**Fix:**
+- **YouTube:**
+  - show one row (4 videos) plus "Show 22 more";
+  - rank by views/hour or set a view floor;
+  - consider collapsing it by default.
+- **Snow, make it state-aware:**
+  - when every resort's next 72h is under 0.5", show a one-row-per-resort table (past 7d est. | next 72h fcst | temp/wind | "Reports ▾");
+  - expand to full cards only when snow is coming or a Powder Alert fires.
+
+**Commands:** `/impeccable distill`, `/impeccable layout`
+
+## Persona Red Flags
+
+**Alex (power user)**
+- No refresh-all and no `r` shortcut.
+- Panels can't be hidden or reordered.
+- Deleting a ticker or topic can't be undone.
+- Invalid tickers vanish silently.
+- The 7-tab News row clips its last tab ("Outdo…") at 1920px.
+
+**Sam (accessibility)**
+- Provenance text at 2.3–2.9:1.
+- Front Range vs mountain bars differ only by blue vs cyan, which differ by just 1.49:1 (`WeatherWidget.tsx:122`).
+- The weather detail modal has no `role="dialog"`, `aria-modal`, Esc, focus trap or focus return (`WeatherWidget.tsx:145`).
+- The watchlist × is hover-only and stays invisible when keyboard-focused (`StocksWidget.tsx:123`).
+- Segmented controls lack `aria-pressed`, and News tabs lack `role="tab"` / `aria-selected`.
+- There are no `:focus-visible` styles.
+- The shimmer and spinners loop forever, with no `prefers-reduced-motion` handling.
+
+**Brian at the desk (glancing from about 1m between tasks)**
+- The home answer is either a 14px sentence or one of eight identical numbers.
+- The most animated thing in his peripheral vision all day is the clock's ticking seconds (`Header.tsx:24`).
+- Snow, markets and drive need a scroll.
+- "Updated 11:13 AM" makes him do arithmetic; "9 min ago" is what a glance needs.
+- On a 2560 monitor about 40% of the width is empty, yet content still sits below the fold.
+
+## Minor Observations
+
+- **Greeting before hydration:** it falls back to hour 8, so it can briefly say "Good morning" in the evening (`Header.tsx:21`).
+- **Briefing Markets line:** the whole index label is coloured green or red; only the number should be (`Briefing.tsx:68`).
+- **Powder Alert colour:** the badge is accent blue while everything else about snow is cyan (`SnowWidget.tsx:71`). Consider moving the badge to cyan in DESIGN.md.
+- **Skeletons:** a generic 3-bar skeleton grows into a 746px weather panel, so the first paint jumps. Shape the skeletons like the content.
+- **"Overcast" ×8:** say it once, then flag only the places that differ.
+- **YouTube quota counter:** developer telemetry; move it to the footnote or settings.
+- **Weather "Updated" time:** it is fetch time. The model's analysis time would be more honest.
+- **Long titles and headlines:** add `text-wrap: balance` to headings and `pretty` to headline text.
+- **Keep:** "No active NWS alerts for these locations." is a good explicit nothing-here state.
+
+## Questions to Consider
+
+1. If Brian could read only one number from across the room, which would it be? Why is it the same size as Beaver Creek's?
+2. Should the page change shape by time and season: a dense morning mode, a calm all-day ambient mode, and a snow panel that grows only when snow is coming?
+3. What would a layout that follows the I-70 corridor look like (home → Golden/Denver to the east; Keystone → Breck → Vail → Beaver Creek to the west, by elevation)?
+4. Does YouTube belong on a glance instrument at all, or is it a separate break-time surface?
+
+## Run Notes
+
+- **Detector:** the CLI scan was clean. All 149 / 178 findings came from the runtime overlay. The live server was stopped with `--keep-inject`.
+- **Screenshots:** in the session scratchpad (not in the repo).
+- **Read-only run:** no source files were edited and nothing was committed.

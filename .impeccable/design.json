@@ -1,0 +1,617 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-06T18:10:35.311Z",
+  "title": "Design System: Personal Command Center",
+  "extensions": {
+    "colorMeta": {
+      "ink-black": {
+        "role": "neutral",
+        "displayName": "Ink Black",
+        "canonical": "oklch(15.5% 0.007 271.0)",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#232426",
+          "#3f4042",
+          "#5c5d61",
+          "#7c7d81",
+          "#9d9ea2",
+          "#c3c4c6",
+          "#eeeef0"
+        ],
+        "theme": "dark"
+      },
+      "graphite-surface": {
+        "role": "neutral",
+        "displayName": "Graphite Surface",
+        "canonical": "oklch(20.0% 0.010 268.2)",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#232427",
+          "#3e4044",
+          "#5b5d63",
+          "#7b7d83",
+          "#9c9ea3",
+          "#c2c4c8",
+          "#edeef1"
+        ],
+        "theme": "dark"
+      },
+      "raised-graphite": {
+        "role": "neutral",
+        "displayName": "Raised Graphite",
+        "canonical": "oklch(23.5% 0.014 267.0)",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#222428",
+          "#3d4045",
+          "#5a5e65",
+          "#7a7d85",
+          "#9b9ea5",
+          "#c2c4c9",
+          "#edeef2"
+        ],
+        "theme": "dark"
+      },
+      "hairline-slate": {
+        "role": "neutral",
+        "displayName": "Hairline Slate",
+        "canonical": "oklch(28.5% 0.018 266.3)",
+        "tonalRamp": [
+          "#0a0b0e",
+          "#222429",
+          "#3d4046",
+          "#595e67",
+          "#797d87",
+          "#9b9ea7",
+          "#c1c4cb",
+          "#edeef2"
+        ],
+        "theme": "dark"
+      },
+      "frost-white": {
+        "role": "neutral",
+        "displayName": "Frost White",
+        "canonical": "oklch(94.6% 0.003 264.5)",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#242425",
+          "#3f4041",
+          "#5d5e5f",
+          "#7c7d7f",
+          "#9e9ea0",
+          "#c3c4c5",
+          "#eeeeef"
+        ],
+        "theme": "dark"
+      },
+      "pewter-muted": {
+        "role": "neutral",
+        "displayName": "Pewter Muted",
+        "canonical": "oklch(65.3% 0.019 267.7)",
+        "tonalRamp": [
+          "#0a0b0e",
+          "#222429",
+          "#3d4047",
+          "#595d67",
+          "#797d88",
+          "#9a9ea7",
+          "#c1c4cb",
+          "#eceef3"
+        ],
+        "theme": "dark"
+      },
+      "ash-faint": {
+        "role": "neutral",
+        "displayName": "Ash Faint",
+        "canonical": "oklch(48.9% 0.019 266.1)",
+        "tonalRamp": [
+          "#0a0b0e",
+          "#222429",
+          "#3c4047",
+          "#595e67",
+          "#787d88",
+          "#9a9ea7",
+          "#c1c4cb",
+          "#eceef3"
+        ],
+        "theme": "dark"
+      },
+      "signal-blue": {
+        "role": "primary",
+        "displayName": "Signal Blue",
+        "canonical": "oklch(72.9% 0.140 258.1)",
+        "tonalRamp": [
+          "#010a1e",
+          "#0b2346",
+          "#1b3f72",
+          "#2d5ca2",
+          "#497dca",
+          "#75a0df",
+          "#a6c6f6",
+          "#dcf0ff"
+        ],
+        "theme": "dark"
+      },
+      "gain-green": {
+        "role": "tertiary",
+        "displayName": "Gain Green",
+        "canonical": "oklch(76.2% 0.154 159.4)",
+        "tonalRamp": [
+          "#001104",
+          "#002f15",
+          "#00502a",
+          "#007340",
+          "#00965d",
+          "#55b484",
+          "#94d5b1",
+          "#d2fae2"
+        ],
+        "theme": "dark"
+      },
+      "loss-coral": {
+        "role": "tertiary",
+        "displayName": "Loss Coral",
+        "canonical": "oklch(68.9% 0.175 27.8)",
+        "tonalRamp": [
+          "#1e0101",
+          "#460a08",
+          "#731b17",
+          "#a32e27",
+          "#cc4d43",
+          "#e47c70",
+          "#fcaca2",
+          "#ffe1d9"
+        ],
+        "theme": "dark"
+      },
+      "amber-caution": {
+        "role": "tertiary",
+        "displayName": "Amber Caution",
+        "canonical": "oklch(82.0% 0.142 78.9)",
+        "tonalRamp": [
+          "#150800",
+          "#361e00",
+          "#5b3700",
+          "#835200",
+          "#a77200",
+          "#c2964b",
+          "#e0bf8a",
+          "#ffeccc"
+        ],
+        "theme": "dark"
+      },
+      "powder-cyan": {
+        "role": "secondary",
+        "displayName": "Powder Cyan",
+        "canonical": "oklch(83.7% 0.092 237.7)",
+        "tonalRamp": [
+          "#010d16",
+          "#092738",
+          "#19445e",
+          "#2a6486",
+          "#4785aa",
+          "#75a5c5",
+          "#a6cae2",
+          "#dcf2ff"
+        ],
+        "theme": "dark"
+      },
+      "paper-bg-light": {
+        "role": "neutral",
+        "displayName": "Ink Black (light theme)",
+        "canonical": "oklch(97.3% 0.003 264.5)",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#242425",
+          "#3f4041",
+          "#5d5e5f",
+          "#7c7d7f",
+          "#9e9ea0",
+          "#c3c4c5",
+          "#eeeeef"
+        ],
+        "theme": "light"
+      },
+      "white-surface-light": {
+        "role": "neutral",
+        "displayName": "Graphite Surface (light theme)",
+        "canonical": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#7d7d7d",
+          "#9e9e9e",
+          "#c4c4c4",
+          "#eeeeee"
+        ],
+        "theme": "light"
+      },
+      "mist-surface-light": {
+        "role": "neutral",
+        "displayName": "Raised Graphite (light theme)",
+        "canonical": "oklch(95.8% 0.004 271.4)",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#242425",
+          "#3f4041",
+          "#5d5d60",
+          "#7c7d80",
+          "#9e9ea0",
+          "#c3c4c5",
+          "#eeeeef"
+        ],
+        "theme": "light"
+      },
+      "hairline-light": {
+        "role": "neutral",
+        "displayName": "Hairline Slate (light theme)",
+        "canonical": "oklch(91.8% 0.009 264.5)",
+        "tonalRamp": [
+          "#0a0b0c",
+          "#232426",
+          "#3e4043",
+          "#5b5e62",
+          "#7b7d82",
+          "#9c9ea3",
+          "#c2c4c7",
+          "#edeef0"
+        ],
+        "theme": "light"
+      },
+      "ink-fg-light": {
+        "role": "neutral",
+        "displayName": "Frost White (light theme)",
+        "canonical": "oklch(20.0% 0.010 268.2)",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#232427",
+          "#3e4044",
+          "#5b5d63",
+          "#7b7d83",
+          "#9c9ea3",
+          "#c2c4c8",
+          "#edeef1"
+        ],
+        "theme": "light"
+      },
+      "slate-muted-light": {
+        "role": "neutral",
+        "displayName": "Pewter Muted (light theme)",
+        "canonical": "oklch(50.7% 0.023 267.1)",
+        "tonalRamp": [
+          "#0a0b0f",
+          "#21242a",
+          "#3c4049",
+          "#585e6a",
+          "#777d8b",
+          "#999eaa",
+          "#c0c4cd",
+          "#eceef4"
+        ],
+        "theme": "light"
+      },
+      "silver-faint-light": {
+        "role": "neutral",
+        "displayName": "Ash Faint (light theme)",
+        "canonical": "oklch(70.5% 0.020 265.9)",
+        "tonalRamp": [
+          "#0a0b0e",
+          "#222429",
+          "#3c4047",
+          "#595e68",
+          "#787d89",
+          "#9a9ea8",
+          "#c1c4cc",
+          "#eceef3"
+        ],
+        "theme": "light"
+      },
+      "signal-blue-light": {
+        "role": "primary",
+        "displayName": "Signal Blue (light theme)",
+        "canonical": "oklch(54.6% 0.215 262.9)",
+        "tonalRamp": [
+          "#000729",
+          "#041d58",
+          "#0f378d",
+          "#1d52c6",
+          "#3873f2",
+          "#679bff",
+          "#9bc4ff",
+          "#d5efff"
+        ],
+        "theme": "light"
+      },
+      "gain-green-light": {
+        "role": "tertiary",
+        "displayName": "Gain Green (light theme)",
+        "canonical": "oklch(55.2% 0.119 160.4)",
+        "tonalRamp": [
+          "#001006",
+          "#002d1a",
+          "#004d30",
+          "#086f49",
+          "#319166",
+          "#6ab08c",
+          "#9fd2b6",
+          "#d9f7e6"
+        ],
+        "theme": "light"
+      },
+      "loss-red-light": {
+        "role": "tertiary",
+        "displayName": "Loss Coral (light theme)",
+        "canonical": "oklch(57.6% 0.191 29.2)",
+        "tonalRamp": [
+          "#1f0000",
+          "#490503",
+          "#77140e",
+          "#a8251b",
+          "#d24638",
+          "#ea7869",
+          "#ffaa9d",
+          "#ffdfd6"
+        ],
+        "theme": "light"
+      },
+      "amber-caution-light": {
+        "role": "tertiary",
+        "displayName": "Amber Caution (light theme)",
+        "canonical": "oklch(62.6% 0.125 70.4)",
+        "tonalRamp": [
+          "#160700",
+          "#371d00",
+          "#5c3600",
+          "#845000",
+          "#a86f1e",
+          "#c4945b",
+          "#e1bd94",
+          "#ffead1"
+        ],
+        "theme": "light"
+      },
+      "powder-cyan-light": {
+        "role": "secondary",
+        "displayName": "Powder Cyan (light theme)",
+        "canonical": "oklch(58.9% 0.132 242.4)",
+        "tonalRamp": [
+          "#000c1c",
+          "#002742",
+          "#00446c",
+          "#006399",
+          "#2a84c0",
+          "#64a6d7",
+          "#9bcaf0",
+          "#d6f3ff"
+        ],
+        "theme": "light"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The header greeting only; 24px below 640px."
+      },
+      "readout": {
+        "displayName": "Readout",
+        "purpose": "Hero current-temperature number on weather cards."
+      },
+      "clock": {
+        "displayName": "Clock",
+        "purpose": "Live Mountain Time clock in the header."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Widget titles and resort names, beside a 16px icon."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Headlines, briefing lines, list rows."
+      },
+      "meta": {
+        "displayName": "Meta",
+        "purpose": "Source · Updated lines, secondary details, chips, segmented controls."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Uppercase section labels and briefing keys."
+      },
+      "micro": {
+        "displayName": "Micro",
+        "purpose": "Per-quote timestamps, range ends, durations."
+      }
+    },
+    "shadows": [
+      {
+        "name": "floating-menu",
+        "value": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+        "purpose": "Settings dropdown only."
+      },
+      {
+        "name": "modal-scrim",
+        "value": "rgb(0 0 0 / 0.6)",
+        "purpose": "Backdrop behind the weather detail sheet."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-standard",
+        "value": "150ms cubic-bezier(0.4, 0, 0.2, 1)",
+        "purpose": "Default hover/color transitions (Tailwind transition)."
+      },
+      {
+        "name": "fade-in",
+        "value": "250ms ease-out, opacity 0→1, translateY 4px→0",
+        "purpose": "Widget content appearing after load."
+      },
+      {
+        "name": "shimmer",
+        "value": "1.4s linear infinite",
+        "purpose": "Skeleton loading bars."
+      },
+      {
+        "name": "spin",
+        "value": "0.9s linear infinite",
+        "purpose": "Refresh glyph while revalidating."
+      },
+      {
+        "name": "thumb-zoom",
+        "value": "scale(1.03) on hover",
+        "purpose": "Video thumbnails."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      },
+      {
+        "name": "container",
+        "value": "1500px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Widget Panel",
+      "kind": "card",
+      "refersTo": "widget-panel",
+      "description": "The housing every widget shares: title, source/updated meta, refresh.",
+      "html": "<section class=\"ds-panel\"><header class=\"ds-panel-head\"><h2 class=\"ds-panel-title\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"var(--accent)\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 2v2\"/><path d=\"m4.93 4.93 1.41 1.41\"/><path d=\"M20 12h2\"/><path d=\"M15.947 12.65a4 4 0 0 0-5.925-4.128\"/><path d=\"M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z\"/></svg>Colorado weather</h2><div class=\"ds-panel-meta\"><span>Open-Meteo · <span class=\"ds-num\">Updated 9:24 PM</span></span><button class=\"ds-icon-btn\" aria-label=\"Refresh\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8\"/><path d=\"M21 3v5h-5\"/><path d=\"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16\"/><path d=\"M8 16H3v5\"/></svg></button></div></header><div class=\"ds-panel-body\"><span class=\"ds-num ds-readout\">41°</span> <span class=\"ds-meta\">feels 37°</span></div></section>",
+      "css": ".ds-panel{background:var(--surface);color:var(--fg);border:1px solid var(--border);border-radius:16px;padding:20px;font-family:var(--font-geist-sans),system-ui,sans-serif;max-width:420px}.ds-panel-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}.ds-panel-title{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;letter-spacing:-0.025em;margin:0}.ds-panel-meta{margin-left:auto;display:flex;align-items:center;gap:12px;font-size:12px;color:var(--muted)}.ds-num{font-family:var(--font-geist-mono),ui-monospace,monospace;font-variant-numeric:tabular-nums}.ds-readout{font-size:36px;font-weight:600;letter-spacing:-0.025em}.ds-meta{font-size:12px;color:var(--muted)}.ds-icon-btn{background:transparent;border:0;border-radius:6px;padding:6px;color:var(--muted);cursor:pointer;display:inline-flex;transition:background 150ms,color 150ms}.ds-icon-btn:hover{background:var(--surface-2);color:var(--fg)}.ds-icon-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}"
+    },
+    {
+      "name": "Location Card",
+      "kind": "card",
+      "refersTo": "inner-card",
+      "description": "Clickable inner card; hover shifts the border to Signal Blue.",
+      "html": "<button class=\"ds-loc\"><div class=\"ds-loc-name\">Genesee</div><div class=\"ds-loc-sub\">Partly cloudy</div><div class=\"ds-loc-temp\">41°</div><div class=\"ds-loc-sub\">H 52° · L 30°</div></button>",
+      "css": ".ds-loc{display:block;text-align:left;width:220px;background:color-mix(in srgb,var(--surface-2) 50%,transparent);border:1px solid var(--border);border-radius:12px;padding:16px;color:var(--fg);cursor:pointer;font-family:var(--font-geist-sans),system-ui,sans-serif;transition:border-color 150ms,background 150ms}.ds-loc:hover{border-color:color-mix(in srgb,var(--accent) 60%,transparent);background:var(--surface-2)}.ds-loc:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.ds-loc-name{font-size:14px;font-weight:500}.ds-loc-sub{font-size:12px;color:var(--muted);font-family:var(--font-geist-mono),ui-monospace,monospace}.ds-loc-temp{margin-top:12px;font-size:36px;font-weight:600;letter-spacing:-0.025em;font-family:var(--font-geist-mono),ui-monospace,monospace;font-variant-numeric:tabular-nums}"
+    },
+    {
+      "name": "Segmented Control",
+      "kind": "button",
+      "refersTo": "segmented-option",
+      "description": "Two-to-three option toggle used for sorts and modes.",
+      "html": "<div class=\"ds-seg\"><button class=\"ds-seg-opt is-active\">Upcoming</button><button class=\"ds-seg-opt\">Recent</button></div>",
+      "css": ".ds-seg{display:inline-flex;border:1px solid var(--border);border-radius:8px;padding:2px;font-size:12px;font-family:var(--font-geist-sans),system-ui,sans-serif}.ds-seg-opt{background:transparent;border:0;border-radius:6px;padding:4px 8px;color:var(--muted);cursor:pointer;font:inherit;transition:color 150ms,background 150ms}.ds-seg-opt:hover{color:var(--fg)}.ds-seg-opt.is-active{background:var(--surface-2);color:var(--fg)}.ds-seg-opt:focus-visible{outline:2px solid var(--accent);outline-offset:1px}"
+    },
+    {
+      "name": "Filter Chips",
+      "kind": "chip",
+      "refersTo": "filter-chip",
+      "description": "Fully rounded filter chips; the active one inverts.",
+      "html": "<div class=\"ds-chips\"><button class=\"ds-chip is-active\">Top stories</button><button class=\"ds-chip\">Colorado</button><button class=\"ds-chip\">Business</button></div>",
+      "css": ".ds-chips{display:flex;gap:4px;font-family:var(--font-geist-sans),system-ui,sans-serif}.ds-chip{border:0;border-radius:9999px;padding:6px 12px;font-size:12px;background:var(--surface-2);color:var(--muted);cursor:pointer;transition:color 150ms,background 150ms}.ds-chip:hover{color:var(--fg)}.ds-chip.is-active{background:var(--fg);color:var(--bg)}.ds-chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}"
+    },
+    {
+      "name": "Link Pill",
+      "kind": "button",
+      "refersTo": "link-pill",
+      "description": "Bordered off-site source link with an external glyph.",
+      "html": "<a class=\"ds-linkpill\" href=\"#\">OpenSnow I-70 <svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15 3h6v6\"/><path d=\"M10 14 21 3\"/><path d=\"M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6\"/></svg></a>",
+      "css": ".ds-linkpill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:12px;color:var(--muted);text-decoration:none;font-family:var(--font-geist-sans),system-ui,sans-serif;transition:border-color 150ms,color 150ms}.ds-linkpill:hover{border-color:color-mix(in srgb,var(--accent) 60%,transparent);color:var(--fg)}.ds-linkpill:focus-visible{outline:2px solid var(--accent);outline-offset:2px}"
+    },
+    {
+      "name": "Ticker Input",
+      "kind": "input",
+      "refersTo": "text-input",
+      "description": "Compact hairline input; focus shifts the border to Signal Blue.",
+      "html": "<input class=\"ds-input\" placeholder=\"Add ticker\" maxlength=\"10\">",
+      "css": ".ds-input{width:96px;background:transparent;border:1px solid var(--border);border-radius:8px;padding:4px 8px;font-size:12px;color:var(--fg);text-transform:uppercase;outline:none;font-family:var(--font-geist-mono),ui-monospace,monospace;transition:border-color 150ms}.ds-input::placeholder{color:var(--faint);text-transform:none}.ds-input:focus{border-color:var(--accent)}"
+    },
+    {
+      "name": "Status Banners",
+      "kind": "custom",
+      "description": "Tinted stale (amber) and error (coral) banners per the Tint, Don't Fill rule.",
+      "html": "<div class=\"ds-banner ds-warn\">Refresh failed — showing older data from 9:24 PM.</div><div class=\"ds-banner ds-down\"><b>Couldn’t load this widget</b><br><span class=\"ds-banner-sub\">Could not reach the server.</span></div>",
+      "css": ".ds-banner{border-radius:8px;padding:8px 12px;font-size:12px;margin-bottom:8px;font-family:var(--font-geist-sans),system-ui,sans-serif;max-width:380px}.ds-warn{border:1px solid color-mix(in srgb,var(--warn) 40%,transparent);background:color-mix(in srgb,var(--warn) 10%,transparent);color:var(--warn)}.ds-down{border:1px solid color-mix(in srgb,var(--down) 40%,transparent);background:color-mix(in srgb,var(--down) 10%,transparent);color:var(--fg);padding:16px;font-size:14px}.ds-banner-sub{color:var(--muted)}"
+    },
+    {
+      "name": "Market Status Pill",
+      "kind": "chip",
+      "description": "Rounded pill with a status dot; green when open.",
+      "html": "<span class=\"ds-pill is-open\"><i></i>US market open</span> <span class=\"ds-pill\"><i></i>US market closed</span>",
+      "css": ".ds-pill{display:inline-flex;align-items:center;gap:6px;border-radius:9999px;padding:2px 8px;font-size:11px;background:var(--surface-2);color:var(--muted);font-family:var(--font-geist-sans),system-ui,sans-serif}.ds-pill i{width:6px;height:6px;border-radius:9999px;background:var(--faint)}.ds-pill.is-open{background:color-mix(in srgb,var(--up) 15%,transparent);color:var(--up)}.ds-pill.is-open i{background:var(--up)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Morning Instrument Panel",
+    "overview": "The Command Center is read the way a pilot reads a cluster of gauges: in quick looks, from a little distance, trusting that every needle is labeled and current. The page is a near-black field of graphite panels, each one a self-contained instrument with its own title, source, update time and refresh control. Numbers are the content, set in Geist Mono with tabular figures so columns hold still as values tick over through the day.\n\nThe system is refined and restrained. Panels are separated by hairline borders and one step of tonal lift, not by shadows. Color is almost absent from the chrome and is reserved for meaning: blue for interaction and the Front Range, cyan for snow and forecasts, green and coral for gains and losses, amber for caution and stale data. Density is high but ordered; a 1500px desktop column fits weather for eight places, four resorts, markets, drive times, news and video without crowding, because hierarchy comes from size and weight, not decoration.\n\nHonesty is a visual concern here. Model estimates, forecasts and observations are distinguished by color and by label in the same glance, and degraded states (stale, needs setup, error) have their own calm, tinted treatments rather than disappearing.",
+    "keyCharacteristics": [
+      "Dark by default (ink black field, graphite panels), with a full light theme swapped through the same token names.",
+      "Tabular, monospaced numerals for every reading; sans for words.",
+      "Flat, tonal layering: border plus one surface step; shadows only on floating menus.",
+      "Semantic-only color; neutral chrome.",
+      "Every panel shows source and \"Updated\" time in quiet meta text.",
+      "Small, subtle motion: content fades up 4px, skeletons shimmer, refresh icons spin."
+    ],
+    "rules": [
+      {
+        "name": "The Meaning-Only Color Rule",
+        "body": "Chrome is neutral. A hue appears only to say something (interactive, snow/forecast, up, down, caution). If a colored element can't name what it means, it goes neutral.",
+        "section": "colors"
+      },
+      {
+        "name": "The Estimate Is Not Measurement Rule",
+        "body": "Past snowfall is model estimate and renders in Ash Faint at 70% opacity; forecast renders in Powder Cyan. The two must never share a color, and each carries a text label (\"model estimate\", \"forecast\").",
+        "section": "colors"
+      },
+      {
+        "name": "The Tint, Don't Fill Rule",
+        "body": "Status surfaces use the status hue at 10% fill with a 40–50% border (`warn/10` + `warn/40`, `down/10` + `down/40`). Solid status fills are not used.",
+        "section": "colors"
+      },
+      {
+        "name": "The Mono for Numbers Rule",
+        "body": "Any value a user reads as a measurement (temperature, inches, price, percent, time, minutes) is set in the `.num` mono face. Words stay in sans.",
+        "section": "typography"
+      },
+      {
+        "name": "The Quiet Provenance Rule",
+        "body": "Source and time labels are always present but always small (12px or less) and muted; they must stay legible, never louder than the reading they describe.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-At-Rest Rule",
+        "body": "Nothing that sits in the page flow casts a shadow. Only a surface that floats above other content (menu, modal) earns elevation.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Hover Is a Border Rule",
+        "body": "Clickable cards respond by shifting the border to Signal Blue at 60% and lifting the fill one tonal step, never by lifting off the page.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do put every reading in the `.num` mono face with tabular figures.",
+      "Do give every new widget the Widget Panel housing, including source, Updated time, refresh, and all five non-happy states.",
+      "Do label estimates and forecasts in text and color (Ash Faint \"model estimate\" vs Powder Cyan \"forecast\").",
+      "Do use role tokens (`bg-surface`, `text-muted`, `border-line`) so both themes work without extra code.",
+      "Do separate surfaces with a 1px hairline plus one tonal step; nest radii 16 → 12 → 8 → 6px.",
+      "Do keep motion to 250ms fades, shimmer skeletons and spinning refresh glyphs."
+    ],
+    "donts": [
+      "Don't add shadows to panels or cards in the page flow; only floating menus and modals get elevation.",
+      "Don't use color decoratively; a hue that doesn't mean interactive, snow/forecast, up, down or caution doesn't belong.",
+      "Don't fill status surfaces with solid color; tint at 10% with a 40–50% border.",
+      "Don't let provenance text (source, time, footnotes) grow louder than 12px or brighter than Pewter Muted.",
+      "Don't render past model estimates and forecasts in the same color.",
+      "Don't hard-code hex values in components; light mode depends on the CSS variables."
+    ]
+  }
+}
