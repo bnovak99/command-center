@@ -13,6 +13,9 @@ const TYPES: Record<string, string> = { jpg: "image/jpeg", jpeg: "image/jpeg", p
 export const contentType = (name: string) => TYPES[name.split(".").pop()!.toLowerCase()] ?? "application/octet-stream";
 export const validId = (id: string) => EXT.test(id) && /^[\w.\- ]+$/.test(id) && !id.startsWith(".");
 
+// Prefer the read-write token when it's set: the SDK otherwise picks OIDC + BLOB_STORE_ID first,
+// which is denied when the store is linked to a different Vercel project.
+const auth = () => (process.env.BLOB_READ_WRITE_TOKEN ? { token: process.env.BLOB_READ_WRITE_TOKEN } : {});
 const hasBlob = () => !!(process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID);
 
 function guard() {
@@ -45,7 +48,7 @@ export async function listPhotos(): Promise<PhotoData> {
   const photos: PhotoData["photos"] = [];
   let cursor: string | undefined;
   do {
-    const r = await list({ prefix: PHOTOS.blobPrefix, cursor, limit: 1000 });
+    const r = await list({ prefix: PHOTOS.blobPrefix, cursor, limit: 1000, ...auth() });
     for (const b of r.blobs) {
       const id = b.pathname.slice(PHOTOS.blobPrefix.length);
       if (validId(id)) photos.push({ id });
@@ -66,7 +69,7 @@ export async function readPhoto(id: string): Promise<{ body: BodyInit; type: str
     } catch {}
   }
   if (!hasBlob()) return null;
-  const r = await get(PHOTOS.blobPrefix + id, { access: "private" });
+  const r = await get(PHOTOS.blobPrefix + id, { access: "private", ...auth() });
   if (!r || r.statusCode !== 200) return null;
   return { body: r.stream, type: r.blob.contentType || contentType(id) };
 }
