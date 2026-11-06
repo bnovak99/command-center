@@ -15,8 +15,15 @@ export const validId = (id: string) => EXT.test(id) && /^[\w.\- ]+$/.test(id) &&
 
 // Prefer the read-write token when it's set: the SDK otherwise picks OIDC + BLOB_STORE_ID first,
 // which is denied when the store is linked to a different Vercel project.
-const auth = () => (process.env.BLOB_READ_WRITE_TOKEN ? { token: process.env.BLOB_READ_WRITE_TOKEN } : {});
-const hasBlob = () => !!(process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID);
+const rwToken = () => process.env.BLOB_READ_WRITE_TOKEN?.trim().replace(/^["']|["']$/g, "") || undefined;
+const auth = () => (rwToken() ? { token: rwToken() } : {});
+/** Which credential is in use, for error messages. Shows only the first characters of the (non-secret) store id. */
+function credential() {
+  const t = rwToken();
+  if (t) return t.startsWith("vercel_blob_rw_") ? `read-write token for store ${t.split("_")[3]?.slice(0, 4)}…` : "a BLOB_READ_WRITE_TOKEN that doesn't start with vercel_blob_rw_";
+  return `Vercel project login for store ${(process.env.BLOB_STORE_ID ?? "").replace(/^store_/, "").slice(0, 4)}…`;
+}
+const hasBlob = () => !!(rwToken() || process.env.BLOB_STORE_ID);
 
 function guard() {
   if (process.env.VERCEL && !process.env.DASHBOARD_PASSWORD) {
@@ -48,7 +55,12 @@ export async function listPhotos(): Promise<PhotoData> {
   const photos: PhotoData["photos"] = [];
   let cursor: string | undefined;
   do {
-    const r = await list({ prefix: PHOTOS.blobPrefix, cursor, limit: 1000, ...auth() });
+    let r;
+    try {
+      r = await list({ prefix: PHOTOS.blobPrefix, cursor, limit: 1000, ...auth() });
+    } catch (e) {
+      throw new Error(`${e instanceof Error ? e.message : "Blob list failed"} (using ${credential()})`);
+    }
     for (const b of r.blobs) {
       const id = b.pathname.slice(PHOTOS.blobPrefix.length);
       if (validId(id)) photos.push({ id });
