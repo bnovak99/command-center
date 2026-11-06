@@ -24,6 +24,7 @@ npm run build                # production build check
 | `DISPLAY_NAME` | no | Greeting name (default `Brian`). |
 | `DASHBOARD_PASSWORD` | no | If set, every request needs HTTP Basic Auth (any username, this password). Unset locally = no gate. |
 | `NWS_USER_AGENT` | recommended | api.weather.gov requires a descriptive User-Agent, e.g. `PersonalCommandCenter (you@example.com)`. |
+| `BLOB_READ_WRITE_TOKEN` | for the briefing photo on Vercel | Only needed on your Mac to run `npm run photos:sync`. Copy it from Vercel → Storage → your **private** Blob store → `.env.local` tab. The deployed site authenticates to the store automatically once the store is connected to the project. |
 
 Weather, snow and news need no keys. `.env.local` is git-ignored.
 
@@ -38,6 +39,7 @@ Weather, snow and news need no keys. `.env.local` is git-ignored.
 | Calendar | Google Calendar secret iCal feed (read-only, parsed with `ical.js`, recurring events expanded server-side) | Free, no quota. Google generates the feed on its own schedule, so very recent edits can lag | 10 min |
 | Packages | Your shipping emails in Gmail (IMAP, read-only, last 21 days). Tracking numbers for UPS / USPS / FedEx / Amazon are found in the email; status comes from the email wording | Free. Status is as fresh as the newest email, not a live carrier scan, and the widget says so. Each row links to the carrier page for the latest scan | 15 min |
 | I-70 alerts (briefing) | CDOT COtrip's keyless map feed (`api-511x-co.carsprogram.org/events/map-features`, chain laws + road closures), filtered to I-70 mile points 160–262 (Golden to Avon) and events in effect now | Free, no key. Undocumented feed that powers cotrip.org, so it could change; failures show as "unavailable", never as "all clear" | 10 min |
+| Briefing photo | Your own photos: the gitignored `photos/` folder locally, a private Vercel Blob store on Vercel | Included in the Hobby free tier (a few MB here; check current Blob limits in Vercel). Photos are served only through `/api/photo/<file>` behind the password, never from a public URL | new photo hourly |
 | Stocks | Finnhub `/quote`, `/stock/profile2`, `/stock/market-status` | Free tier, ~10 calls per refresh | 1 min open / 15 min closed |
 | YouTube | YouTube Data API v3 | `search.list` = 100 units × topics; cached 3 h per topic (7 topics ≈ 700 units per refresh ≈ 5,600/day at most) | 3 h |
 
@@ -55,6 +57,18 @@ Lift/trail counts and base depth have no public API — each resort card links t
 - **Package privacy**: Gmail credentials stay server-side. The widget shows sender, carrier, status, and only the last 4 digits of tracking numbers; no addresses or email bodies reach the browser. `/api/packages` is sent `Cache-Control: private, no-store`, and on Vercel it refuses to return anything unless `DASHBOARD_PASSWORD` is set.
 - Stock index tiles use SPY/QQQ/DIA/IWM and are labeled as ETF proxies.
 - The dashboard needs a running Node server (in-memory cache); on Vercel each warm function instance has its own cache.
+
+## Briefing photo
+
+The right side of the Daily briefing shows a random photo from your own collection, changing every hour (hover it for a shuffle button). Google Photos can't feed this directly: since March 2025 apps can only read photos they uploaded themselves, and the Picker API's links expire after an hour.
+
+- **Locally:** drop `.jpg`, `.png`, `.webp` or `.avif` files into `photos/` in this folder. It's in `.gitignore` because the repo is public, so photos are never committed.
+- **On Vercel:** uncommitted files don't deploy, so the live site reads from a private Vercel Blob store:
+  1. Vercel → your project → **Storage** → **Create** → **Blob**, choose **Private** access (this can't be changed later), and connect it to the project.
+  2. From the store's `.env.local` tab, copy `BLOB_READ_WRITE_TOKEN` into your local `.env.local`.
+  3. Run `npm run photos:sync`. It uploads new or changed photos from `photos/` and removes ones you deleted. Re-run it whenever you change the folder.
+  4. Redeploy once so the project picks up the store connection.
+- On Vercel the photo route refuses to serve anything unless `DASHBOARD_PASSWORD` is set.
 
 ## Deploy to Vercel (Hobby)
 

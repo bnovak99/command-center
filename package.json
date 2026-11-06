@@ -6,9 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "photos:sync": "node --env-file=.env.local scripts/sync-photos.mjs"
   },
   "dependencies": {
+    "@vercel/blob": "^2.8.2",
     "fast-xml-parser": "^5.12.0",
     "geist": "^1.9.1",
     "ical.js": "^2.2.1",

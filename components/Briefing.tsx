@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Sparkles } from "lucide-react";
 import { useApi, useLocalPref } from "@/lib/hooks";
+import { BriefingPhoto } from "@/components/BriefingPhoto";
 import { REFRESH, DEFAULT_WATCHLIST, POWDER_ALERT_INCHES } from "@/lib/config";
 import { wmo } from "@/components/WeatherIcon";
 import { WEATHER_PATH } from "@/components/WeatherWidget";
@@ -159,7 +160,8 @@ export function Briefing() {
   return (
     <section className="rounded-2xl border border-line bg-gradient-to-br from-surface to-surface2/50 p-4 sm:p-5" aria-label="Daily briefing">
       <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold"><Sparkles className="size-4 text-accent" /> Daily briefing</h2>
-      <dl className="grid gap-x-8 gap-y-2.5 text-sm sm:grid-cols-2 xl:grid-cols-3">
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(240px,30%)]">
+      <dl className="grid content-start gap-x-8 gap-y-2.5 text-sm sm:grid-cols-2 2xl:grid-cols-3">
         {lines.map((l) => (
           <div key={l.label} className={`flex flex-col gap-0.5 rounded-lg px-1 ${l.tone === "alert" ? "bg-accent/10 p-2" : ""}`}>
             <dt className="text-[11px] uppercase tracking-wide text-faint">{l.label}</dt>
@@ -167,6 +169,8 @@ export function Briefing() {
           </div>
         ))}
       </dl>
+      <BriefingPhoto />
+      </div>
     </section>
   );
 }

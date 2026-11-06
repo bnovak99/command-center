@@ -90,7 +90,11 @@ export const DEFAULT_YT_TOPICS = [
 export const DEFAULT_YT_CHANNELS: string[] = [];
 
 // Auto-refresh intervals (ms)
-export const REFRESH = { weather: 15 * 60_000, snow: 30 * 60_000, news: 30 * 60_000, stocksOpen: 60_000, stocksClosed: 15 * 60_000, youtube: 3 * 60 * 60_000, i70: 10 * 60_000, drive: 10 * 60_000, calendar: 10 * 60_000, packages: 15 * 60_000 };
+export const REFRESH = { weather: 15 * 60_000, snow: 30 * 60_000, news: 30 * 60_000, stocksOpen: 60_000, stocksClosed: 15 * 60_000, youtube: 3 * 60 * 60_000, i70: 10 * 60_000, drive: 10 * 60_000, calendar: 10 * 60_000, packages: 15 * 60_000, photo: 60 * 60_000 };
+
+// Briefing photo: a random personal photo, changed every `rotateMs`. Files live in the gitignored photos/ folder
+// locally and in a private Vercel Blob store (under blobPrefix) on the deployed site.
+export const PHOTOS = { rotateMs: 60 * 60_000, blobPrefix: "briefing-photos/" };
 
 // Calendar: days shown starting today (MT). Calendars come from GOOGLE_CALENDAR_ICS in .env.local (secret URLs stay out of git).
 export const CALENDAR_DAYS = 7;
