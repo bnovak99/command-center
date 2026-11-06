@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "photos:sync": "node --env-file=.env.local scripts/sync-photos.mjs"
+    "photos:sync": "node --env-file-if-exists=.env.local --env-file-if-exists=.env.vercel scripts/sync-photos.mjs"
   },
   "dependencies": {
     "@vercel/blob": "^2.8.2",

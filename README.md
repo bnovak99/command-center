@@ -24,7 +24,7 @@ npm run build                # production build check
 | `DISPLAY_NAME` | no | Greeting name (default `Brian`). |
 | `DASHBOARD_PASSWORD` | no | If set, every request needs HTTP Basic Auth (any username, this password). Unset locally = no gate. |
 | `NWS_USER_AGENT` | recommended | api.weather.gov requires a descriptive User-Agent, e.g. `PersonalCommandCenter (you@example.com)`. |
-| `BLOB_READ_WRITE_TOKEN` | for the briefing photo on Vercel | Only needed on your Mac to run `npm run photos:sync`. Copy it from Vercel → Storage → your **private** Blob store → `.env.local` tab. The deployed site authenticates to the store automatically once the store is connected to the project. |
+| `BLOB_STORE_ID` | for the briefing photo on Vercel | Added automatically when you connect a private Blob store to the project; the deployed site then signs in to the store by itself. On your Mac it comes from `npx vercel env pull .env.vercel` (see Briefing photo). |
 
 Weather, snow and news need no keys. `.env.local` is git-ignored.
 
@@ -65,7 +65,7 @@ The right side of the Daily briefing shows a random photo from your own collecti
 - **Locally:** drop `.jpg`, `.png`, `.webp` or `.avif` files into `photos/` in this folder. It's in `.gitignore` because the repo is public, so photos are never committed.
 - **On Vercel:** uncommitted files don't deploy, so the live site reads from a private Vercel Blob store:
   1. Vercel → your project → **Storage** → **Create** → **Blob**, choose **Private** access (this can't be changed later), and connect it to the project.
-  2. From the store's `.env.local` tab, copy `BLOB_READ_WRITE_TOKEN` into your local `.env.local`.
+  2. On your Mac, run `npx vercel link` once (pick this project), then `npx vercel env pull .env.vercel`. That file holds `BLOB_STORE_ID` and a short-lived `VERCEL_OIDC_TOKEN` (about 12 hours; pull again when it expires). It's gitignored. Older stores can instead put a `BLOB_READ_WRITE_TOKEN` in `.env.local`.
   3. Run `npm run photos:sync`. It uploads new or changed photos from `photos/` and removes ones you deleted. Re-run it whenever you change the folder.
   4. Redeploy once so the project picks up the store connection.
 - On Vercel the photo route refuses to serve anything unless `DASHBOARD_PASSWORD` is set.

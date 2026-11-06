@@ -1,6 +1,6 @@
 // Uploads the gitignored photos/ folder to a PRIVATE Vercel Blob store so the deployed
 // dashboard can show them, and removes blobs whose file is gone locally.
-// Usage: npm run photos:sync   (needs BLOB_READ_WRITE_TOKEN in .env.local)
+// Usage: npm run photos:sync   (credentials in .env.local, see below)
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { put, list, del } from "@vercel/blob";
@@ -9,8 +9,10 @@ const PREFIX = "briefing-photos/";
 const EXT = /\.(jpe?g|png|webp|avif|gif)$/i;
 const dir = path.join(process.cwd(), "photos");
 
-if (!process.env.BLOB_READ_WRITE_TOKEN) {
-  console.error("Missing BLOB_READ_WRITE_TOKEN. Copy it from Vercel → Storage → your Blob store → .env.local tab into .env.local.");
+// Needs either BLOB_STORE_ID + VERCEL_OIDC_TOKEN (from `npx vercel env pull .env.vercel`, valid ~12 h)
+// or a BLOB_READ_WRITE_TOKEN for older stores.
+if (!(process.env.BLOB_STORE_ID && process.env.VERCEL_OIDC_TOKEN) && !process.env.BLOB_READ_WRITE_TOKEN) {
+  console.error("No Blob credentials. Run `npx vercel link` once, then `npx vercel env pull .env.vercel`, and try again.");
   process.exit(1);
 }
 const files = (await readdir(dir)).filter((f) => EXT.test(f) && !f.startsWith("."));

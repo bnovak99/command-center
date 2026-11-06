@@ -13,15 +13,16 @@ const TYPES: Record<string, string> = { jpg: "image/jpeg", jpeg: "image/jpeg", p
 export const contentType = (name: string) => TYPES[name.split(".").pop()!.toLowerCase()] ?? "application/octet-stream";
 export const validId = (id: string) => EXT.test(id) && /^[\w.\- ]+$/.test(id) && !id.startsWith(".");
 
-// Prefer the read-write token when it's set: the SDK otherwise picks OIDC + BLOB_STORE_ID first,
-// which is denied when the store is linked to a different Vercel project.
+// Credentials: on Vercel a connected private store gives BLOB_STORE_ID and the SDK signs in with the
+// project's OIDC token automatically. A read-write token is used only when there's no store id.
 const rwToken = () => process.env.BLOB_READ_WRITE_TOKEN?.trim().replace(/^["']|["']$/g, "") || undefined;
-const auth = () => (rwToken() ? { token: rwToken() } : {});
+const tokenMode = () => !process.env.BLOB_STORE_ID && !!rwToken();
+const auth = () => (tokenMode() ? { token: rwToken() } : {});
 /** Which credential is in use, for error messages. Shows only the first characters of the (non-secret) store id. */
 function credential() {
-  const t = rwToken();
-  if (t) return t.startsWith("vercel_blob_rw_") ? `read-write token for store ${t.split("_")[3]?.slice(0, 4)}…` : "a BLOB_READ_WRITE_TOKEN that doesn't start with vercel_blob_rw_";
-  return `Vercel project login for store ${(process.env.BLOB_STORE_ID ?? "").replace(/^store_/, "").slice(0, 4)}…`;
+  if (!tokenMode()) return `Vercel project login for store ${(process.env.BLOB_STORE_ID ?? "").replace(/^store_/, "").slice(0, 4)}…`;
+  const t = rwToken()!;
+  return t.startsWith("vercel_blob_rw_") ? `read-write token for store ${t.split("_")[3]?.slice(0, 4)}…` : "a BLOB_READ_WRITE_TOKEN that doesn't start with vercel_blob_rw_";
 }
 const hasBlob = () => !!(rwToken() || process.env.BLOB_STORE_ID);
 
