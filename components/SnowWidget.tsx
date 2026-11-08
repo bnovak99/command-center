@@ -78,23 +78,23 @@ function ResortCard({ r, best, sort }: { r: SnowResort; best: boolean; sort: str
         <span className="flex items-center gap-1"><Wind className="size-3" /><span className="num">{Math.round(r.current.wind)} mph (gusts {Math.round(r.current.gust)})</span></span>
       </div>
 
-      <div className="mt-3 grid grid-cols-2 gap-3 text-center">
+      <div className="mt-3 grid grid-cols-1 gap-2 text-center min-[420px]:grid-cols-2 sm:gap-3">
         <div className="rounded-lg bg-surface/60 p-2">
           <div className="text-[11px] uppercase tracking-wide text-muted">Past · model estimate</div>
-          <div className="num mt-1 flex justify-around text-sm">
+          <div className="num mt-1 grid grid-cols-3 text-sm">
             <Cell l="24h" v={inch(r.past.h24)} /><Cell l="48h" v={inch(r.past.h48)} /><Cell l="7d" v={inch(r.past.d7)} />
           </div>
         </div>
         <div className="rounded-lg bg-surface/60 p-2">
           <div className="text-[11px] uppercase tracking-wide text-snow">Next · forecast</div>
-          <div className="num mt-1 flex justify-around text-sm">
+          <div className="num mt-1 grid grid-cols-4 text-sm">
             <Cell l="24h" v={inch(r.next.h24)} hi /><Cell l="48h" v={inch(r.next.h48)} hi /><Cell l="72h" v={inch(r.next.h72)} hi /><Cell l="7d" v={inch(r.next.d7)} hi />
           </div>
         </div>
       </div>
 
       <div className="mt-3">
-        <svg viewBox="0 0 280 70" className="h-20 w-full" role="img" aria-label="14-day snowfall bars: past 7 days estimated, next 7 days forecast">
+        <svg viewBox="0 -10 280 80" className="h-20 w-full" role="img" aria-label="14-day snowfall bars: past 7 days estimated, next 7 days forecast">
           {r.daily.map((d, i) => {
             const h = (d.snow / max) * 48;
             const x = i * 20 + 3;
@@ -111,7 +111,7 @@ function ResortCard({ r, best, sort }: { r: SnowResort; best: boolean; sort: str
             );
           })}
         </svg>
-        <div className="flex gap-4 text-[11px] text-faint">
+        <div className="flex flex-wrap gap-x-4 gap-y-0.5 text-[11px] text-faint">
           <span>■ <span className="text-muted">past 7 days (model estimate)</span></span>
           <span className="text-snow">■ <span className="text-muted">next 7 days (forecast)</span></span>
         </div>

@@ -174,8 +174,8 @@ export function Briefing() {
   let mk: React.ReactNode = m.loading ? pending : unavailable(m.res);
   if (m.res?.ok) {
     const d = m.res.data;
-    const mv = d.indices.filter((i) => i.valid).map((i) => (
-      <span key={i.symbol} className={i.pct >= 0 ? "text-up" : "text-down"}>{i.label} <span className="num">{i.pct >= 0 ? "+" : ""}{i.pct.toFixed(2)}%</span>{" "}</span>
+    const mv = d.indices.filter((i) => i.valid).map((i, k) => (
+      <span key={i.symbol}>{k > 0 && <span className="text-faint"> · </span>}<span className={`whitespace-nowrap ${i.pct >= 0 ? "text-up" : "text-down"}`}>{i.label} <span className="num">{i.pct >= 0 ? "+" : ""}{i.pct.toFixed(2)}%</span></span></span>
     ));
     mk = <>{d.market ? (d.market.isOpen ? "Market open · " : "Market closed · ") : ""}{mv.length ? mv : "no index data"}</>;
   }
@@ -192,10 +192,10 @@ export function Briefing() {
   return (
     <section className="rounded-2xl border border-line bg-gradient-to-br from-surface to-surface2/50 p-4 sm:p-5" aria-label="Daily briefing">
       <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold"><Sparkles className="size-4 text-accent" /> Daily briefing</h2>
-      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(240px,30%)]">
-      <dl className="grid content-start gap-x-8 gap-y-2.5 text-sm sm:grid-cols-2 2xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(240px,30%)]">
+      <dl className="grid min-w-0 grid-cols-1 content-start gap-x-8 gap-y-2.5 text-sm sm:grid-cols-2 2xl:grid-cols-3">
         {lines.map((l) => (
-          <div key={l.label} className={`flex flex-col gap-0.5 rounded-lg px-1 ${l.tone === "alert" ? "bg-accent/10 p-2" : ""}`}>
+          <div key={l.label} className={`flex min-w-0 flex-col gap-0.5 rounded-lg px-1 [overflow-wrap:anywhere] ${l.tone === "alert" ? "bg-accent/10 p-2" : ""}`}>
             <dt className="text-[11px] uppercase tracking-wide text-faint">{l.label}</dt>
             <dd className="leading-snug">{l.text}</dd>
           </div>

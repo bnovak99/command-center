@@ -29,15 +29,17 @@ export function DriveWidget() {
             return (
               <li key={x.id}>
                 <a href={x.mapsUrl} target="_blank" rel="noreferrer" className="flex items-center justify-between gap-3 py-2.5 hover:text-accent">
-                  <span className="text-sm font-medium">{x.name}</span>
+                  <span className="min-w-0 text-sm font-medium">{x.name}</span>
                   {x.error || x.minutes === undefined ? (
                     <span className="text-xs text-warn">unavailable</span>
                   ) : (
-                    <span className="num flex items-baseline gap-3 text-right">
-                      <span className="text-[11px] text-faint">{x.miles} mi</span>
-                      <span className="text-[11px] text-muted">arrive {fmtTime(d.departAt + x.minutes * 60_000)}</span>
-                      <span className={`text-[11px] ${tone}`}>{delay >= 2 ? `+${delay} min traffic` : "no delay"}</span>
-                      <span className="w-16 text-base font-semibold">{hm(x.minutes)}</span>
+                    <span className="num flex shrink-0 flex-col-reverse items-end gap-x-3 text-right sm:flex-row sm:items-baseline">
+                      <span className="flex gap-x-2 whitespace-nowrap sm:gap-x-3">
+                        <span className="hidden text-[11px] text-faint min-[420px]:inline">{x.miles} mi</span>
+                        <span className="text-[11px] text-muted">arrive {fmtTime(d.departAt + x.minutes * 60_000)}</span>
+                        <span className={`text-[11px] ${tone}`}>{delay >= 2 ? `+${delay} min traffic` : "no delay"}</span>
+                      </span>
+                      <span className="whitespace-nowrap text-base font-semibold sm:w-16">{hm(x.minutes)}</span>
                     </span>
                   )}
                 </a>

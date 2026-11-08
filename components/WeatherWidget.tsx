@@ -40,7 +40,7 @@ export function WeatherWidget() {
         return (
           <div className="space-y-5">
             <Alerts d={d} />
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="grid grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-4">
               {d.locations.map((l) => (
                 <LocationCard key={l.id} l={l} onClick={() => setOpen(l.id)} />
               ))}
@@ -82,20 +82,20 @@ function LocationCard({ l, onClick }: { l: WLocation; onClick: () => void }) {
   const c = l.current;
   const today = l.daily[0];
   return (
-    <button onClick={onClick} className="group rounded-xl border border-line bg-surface2/50 p-4 text-left transition hover:border-accent/60 hover:bg-surface2">
+    <button onClick={onClick} className="group min-w-0 rounded-xl border border-line bg-surface2/50 p-3 text-left sm:p-4 transition hover:border-accent/60 hover:bg-surface2">
       <div className="flex items-start justify-between">
-        <div>
-          <div className="text-sm font-medium">{l.name}</div>
+        <div className="min-w-0">
+          <div className="text-sm font-medium leading-snug">{l.name}</div>
           <div className="text-xs text-muted">{wmo(c.code).label}</div>
         </div>
-        <WeatherIcon code={c.code} isDay={c.isDay} className="size-7 text-accent" />
+        <WeatherIcon code={c.code} isDay={c.isDay} className="size-6 shrink-0 text-accent sm:size-7" />
       </div>
-      <div className="mt-3 flex items-baseline gap-3">
-        <span className="num text-4xl font-semibold tracking-tight">{r0(c.temp)}°</span>
+      <div className="mt-2 flex flex-wrap items-baseline gap-x-3 sm:mt-3">
+        <span className="num text-3xl font-semibold tracking-tight sm:text-4xl">{r0(c.temp)}°</span>
         <span className="text-xs text-muted">feels {r0(c.feels)}°</span>
       </div>
       <div className="num mt-1 text-xs text-muted">H {r0(today.hi)}° · L {r0(today.lo)}°</div>
-      <div className="mt-3 grid grid-cols-3 gap-2 text-xs text-muted">
+      <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted sm:grid sm:grid-cols-3 sm:gap-2">
         <span className="flex items-center gap-1"><Droplets className="size-3" />{today.pop}%</span>
         <span className="flex items-center gap-1"><Wind className="size-3" />{r0(c.wind)} {compass(c.windDir)}</span>
         <span className="num">{r0(c.humidity)}% RH</span>
@@ -117,7 +117,7 @@ function Comparison({ locations }: { locations: WLocation[] }) {
           const w = Math.max(2, ((l.current.temp - base) / Math.max(max - base, 1)) * 100);
           return (
             <div key={l.id} className="flex items-center gap-3 text-xs">
-              <span className="w-28 shrink-0 truncate text-muted">{l.name}</span>
+              <span className="w-24 shrink-0 truncate text-muted sm:w-28">{l.name}</span>
               <div className="h-2 flex-1 rounded-full bg-surface2">
                 <div className={`h-2 rounded-full ${l.region === "mountains" ? "bg-snow" : "bg-accent"}`} style={{ width: `${w}%` }} />
               </div>

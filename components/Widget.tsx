@@ -91,7 +91,7 @@ export function Widget<T>({ title, icon, res, networkError, loading, validating,
           <button
             onClick={onRefresh}
             aria-label={`Refresh ${title}`}
-            className="rounded-md p-1.5 text-muted transition hover:bg-surface2 hover:text-fg"
+            className="rounded-md p-2 text-muted transition hover:bg-surface2 hover:text-fg sm:p-1.5"
           >
             <RefreshCw className={`size-3.5 ${validating ? "spin" : ""}`} />
           </button>
@@ -101,7 +101,7 @@ export function Widget<T>({ title, icon, res, networkError, loading, validating,
             aria-controls={bodyId}
             aria-label={`${collapsed ? "Expand" : "Collapse"} ${title}`}
             title={collapsed ? "Expand" : "Collapse"}
-            className="-ml-1.5 rounded-md p-1.5 text-muted transition hover:bg-surface2 hover:text-fg"
+            className="-ml-1.5 rounded-md p-2 text-muted sm:p-1.5 transition hover:bg-surface2 hover:text-fg"
           >
             <ChevronDown className={`size-3.5 transition-transform duration-200 ${collapsed ? "-rotate-90" : ""}`} />
           </button>

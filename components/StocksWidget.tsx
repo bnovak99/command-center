@@ -64,7 +64,7 @@ export function StocksWidget() {
             <div>
               <div className="mb-2 flex flex-wrap items-center gap-2">
                 <h3 className="text-xs font-medium uppercase tracking-wide text-muted">Watchlist</h3>
-                <div className="ml-auto flex items-center gap-2">
+                <div className="ml-auto flex flex-wrap items-center justify-end gap-2">
                   <div className="flex rounded-lg border border-line p-0.5 text-xs">
                     {(["pct", "ticker"] as const).map((s) => (
                       <button key={s} onClick={() => setSort(s)} className={`rounded-md px-2 py-1 ${sort === s ? "bg-surface2 text-fg" : "text-muted"}`}>
@@ -100,7 +100,7 @@ function Row({ q, onRemove }: { q: Quote; onRemove: () => void }) {
   const range = q.high - q.low;
   const pos = range > 0 ? Math.min(100, Math.max(0, ((q.price - q.low) / range) * 100)) : 50;
   return (
-    <div className="group grid grid-cols-[4.5rem_1fr_auto] items-center gap-3 py-2.5 sm:grid-cols-[5rem_minmax(0,1fr)_7rem_8rem_12rem_1.5rem]">
+    <div className="group grid grid-cols-[4rem_1fr_auto_1rem] items-center gap-x-3 py-2.5 sm:grid-cols-[5rem_minmax(0,1fr)_7rem_8rem_12rem_1.5rem]">
       <div className="num text-sm font-semibold">{q.symbol}</div>
       <div className="hidden truncate text-xs text-muted sm:block">{q.name ?? ""}</div>
       {q.valid ? (

@@ -29,22 +29,24 @@ export function YouTubeWidget() {
   return mode === "subs" ? <SubsWidget toggle={toggle} /> : <TopicsWidget toggle={toggle} />;
 }
 
-// At most two rows at every breakpoint: the grid is 1 / 2 / 4 columns, so show 2 / 4 / 8 videos.
-const rowLimit = (i: number) => (i < 2 ? "block" : i < 4 ? "hidden sm:block" : "hidden xl:block");
+// Phone: 4 compact rows (thumbnail beside the title). Wider: at most two rows of the 2 / 4 column grid, so 4 / 8 videos.
+const rowLimit = (i: number) => (i < 4 ? "flex sm:block" : "hidden xl:block");
 
 function VideoGrid({ list }: { list: Video[] }) {
   return (
-    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4">
               {list.slice(0, 8).map((v, i) => (
-                <a key={v.id} href={`https://www.youtube.com/watch?v=${v.id}`} target="_blank" rel="noreferrer" className={`group ${rowLimit(i)}`}>
-                  <div className="relative overflow-hidden rounded-lg bg-surface2">
+                <a key={v.id} href={`https://www.youtube.com/watch?v=${v.id}`} target="_blank" rel="noreferrer" className={`group min-w-0 gap-3 ${rowLimit(i)}`}>
+                  <div className="relative w-32 shrink-0 self-start overflow-hidden rounded-lg bg-surface2 sm:w-auto">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={v.thumb} alt="" loading="lazy" className="aspect-video w-full object-cover transition group-hover:scale-[1.03]" />
                     <span className="num absolute bottom-1.5 right-1.5 rounded bg-black/80 px-1.5 py-0.5 text-[10px] text-white">{dur(v.durationSec)}</span>
                   </div>
-                  <h3 className="mt-2 line-clamp-2 text-sm font-medium leading-snug group-hover:text-accent">{v.title}</h3>
+                  <div className="min-w-0">
+                  <h3 className="line-clamp-2 sm:mt-2 text-sm font-medium leading-snug group-hover:text-accent">{v.title}</h3>
                   <p className="mt-0.5 text-xs text-muted">{v.channel}</p>
                   <p className="num text-[11px] text-faint">{timeAgo(v.publishedAt)} · {views(v.views)} views · {v.topic}</p>
+                  </div>
                 </a>
               ))}
             </div>
