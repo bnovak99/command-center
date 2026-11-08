@@ -39,6 +39,7 @@ Weather, snow and news need no keys. `.env.local` is git-ignored.
 | Calendar | Google Calendar secret iCal feed (read-only, parsed with `ical.js`, recurring events expanded server-side) | Free, no quota. Google generates the feed on its own schedule, so very recent edits can lag | 10 min |
 | Packages | Your shipping emails in Gmail (IMAP, read-only, last 21 days). Tracking numbers for UPS / USPS / FedEx / Amazon are found in the email; status comes from the email wording | Free. Status is as fresh as the newest email, not a live carrier scan, and the widget says so. Each row links to the carrier page for the latest scan | 15 min |
 | I-70 alerts (briefing) | CDOT COtrip's keyless map feed (`api-511x-co.carsprogram.org/events/map-features`, chain laws + road closures), filtered to I-70 mile points 160–262 (Golden to Avon) and events in effect now | Free, no key. Undocumented feed that powers cotrip.org, so it could change; failures show as "unavailable", never as "all clear" | 10 min |
+| Sports scores (briefing) | ESPN's public team schedule JSON (`site.api.espn.com/apis/site/v2/sports/<league>/teams/<team>/schedule`) for the Nuggets, Broncos and Lions (`SPORTS_TEAMS` in `lib/config.ts`): latest final, live score if a game is on, and the next game | Free, no key. Undocumented, so it could change; a failing team shows "unavailable". Live scores can lag, so they show an "as of" time | 10 min (server cache 5 min) |
 | Briefing photo | Your own photos: the gitignored `photos/` folder locally, a private Vercel Blob store on Vercel | Included in the Hobby free tier (a few MB here; check current Blob limits in Vercel). Photos are served only through `/api/photo/<file>` behind the password, never from a public URL | new photo hourly |
 | Stocks | Finnhub `/quote`, `/stock/profile2`, `/stock/market-status` | Free tier, ~10 calls per refresh | 1 min open / 15 min closed |
 | YouTube | YouTube Data API v3 | `search.list` = 100 units × topics; cached 3 h per topic (7 topics ≈ 700 units per refresh ≈ 5,600/day at most) | 3 h |
@@ -82,4 +83,4 @@ New entry in `lib/config.ts` → new `app/api/<name>/route.ts` using `handle()` 
 
 ## Later phases (not built)
 
-Sports, air quality, I-70 conditions, outdoor scoring, quick links, Winter Park, SNOTEL, stock history charts, optional AI briefing.
+Air quality, outdoor scoring, quick links, Winter Park, SNOTEL, stock history charts, optional AI briefing.
