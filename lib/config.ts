@@ -40,7 +40,7 @@ export const REGIONAL_LINKS = [
   { label: "OpenSnow Colorado Daily Snow", href: "https://opensnow.com/dailysnow/colorado" },
 ];
 
-export const NEWS_CATEGORIES = ["National & World", "Business & Markets", "Tech & AI", "Colorado", "Science & Health", "Outdoors"] as const;
+export const NEWS_CATEGORIES = ["National & World", "Business & Markets", "Tech & AI", "Colorado", "Science & Health", "Outdoors", "Sports"] as const;
 export type NewsCategory = (typeof NEWS_CATEGORIES)[number];
 
 export const NEWS_FEEDS: { source: string; url: string; category: NewsCategory }[] = [
@@ -62,9 +62,16 @@ export const NEWS_FEEDS: { source: string; url: string; category: NewsCategory }
   { source: "Outside", url: "https://www.outsideonline.com/feed/", category: "Outdoors" },
   { source: "Pinkbike", url: "https://www.pinkbike.com/pinkbike_xml_feed.php", category: "Outdoors" },
   { source: "Powder", url: "https://www.powder.com/feed", category: "Outdoors" },
+  // Sports: general headlines plus team coverage for the Nuggets, Broncos and Lions.
+  { source: "ESPN", url: "https://www.espn.com/espn/rss/news", category: "Sports" },
+  { source: "CBS Sports", url: "https://www.cbssports.com/rss/headlines/", category: "Sports" },
+  { source: "Denver Post Sports", url: "https://www.denverpost.com/sports/feed/", category: "Sports" },
+  { source: "Denver Stiffs", url: "https://www.denverstiffs.com/rss/index.xml", category: "Sports" },
+  { source: "Mile High Report", url: "https://www.milehighreport.com/rss/index.xml", category: "Sports" },
+  { source: "Pride of Detroit", url: "https://www.prideofdetroit.com/rss/index.xml", category: "Sports" },
 ];
 export const CATEGORY_WEIGHT: Record<NewsCategory, number> = {
-  "National & World": 1.2, "Business & Markets": 1, "Tech & AI": 1, Colorado: 1.1, "Science & Health": 0.9, Outdoors: 0.8,
+  "National & World": 1.2, "Business & Markets": 1, "Tech & AI": 1, Colorado: 1.1, "Science & Health": 0.9, Outdoors: 0.8, Sports: 0.8,
 };
 
 export const INDEX_PROXIES = [
