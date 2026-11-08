@@ -96,13 +96,13 @@ function Agenda({ data, now, hidden }: { data: CalendarData; now: number; hidden
 
       <NowNext current={current} next={next} now={now} hidden={hidden} todayKey={todayKey} />
 
-      <div className="grid gap-x-4 gap-y-5 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-[1.5fr_repeat(6,minmax(0,1fr))]">
+      <div className="grid grid-cols-1 gap-x-4 gap-y-5 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-[1.5fr_repeat(6,minmax(0,1fr))]">
         {days.map((k) => {
           const b = byDay.get(k)!;
           const isToday = k === todayKey;
           const empty = !b.allDay.length && !b.timed.length;
           return (
-            <div key={k} className={`min-w-0 ${isToday ? "" : "xl:border-l xl:border-line xl:pl-4"}`}>
+            <div key={k} className={`min-w-0 ${isToday ? "" : "xl:border-l xl:border-line xl:pl-4"} ${empty && !isToday ? "hidden sm:block" : ""}`}>
               <div className="mb-2 flex items-baseline gap-2 border-b border-line pb-1.5">
                 <h3 className={`text-[11px] font-medium uppercase tracking-wide ${isToday ? "text-fg" : "text-muted"}`}>{dayLabel(k, todayKey)}</h3>
                 {isToday && (
@@ -169,7 +169,7 @@ function NowNext({ current, next, now, hidden, todayKey }: { current: CalEvent[]
     return <div className="rounded-lg bg-surface2 px-3 py-2.5 text-sm text-muted">Nothing else on the calendar today.</div>;
   }
   return (
-    <div className="grid gap-2 sm:grid-cols-2">
+    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
       {cur && (
         <div className="rounded-lg bg-surface2 px-3 py-2.5">
           <div className="text-[11px] font-medium uppercase tracking-wide text-accent">Now</div>

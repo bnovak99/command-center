@@ -30,7 +30,7 @@ export function NewsWidget() {
         const failed = d.feeds.filter((f) => !f.ok);
         return (
           <div>
-            <div className="mb-4 flex gap-1 overflow-x-auto pb-1">
+            <div className="-mx-4 mb-4 flex gap-1 overflow-x-auto px-4 pb-1 [mask-image:linear-gradient(to_right,transparent,#000_1rem,#000_calc(100%-2rem),transparent)] sm:mx-0 sm:px-0 sm:[mask-image:linear-gradient(to_right,#000_calc(100%-2rem),transparent)]">
               {tabs.map((t) => (
                 <button key={t} onClick={() => setTab(t)} className={`shrink-0 rounded-full px-3 py-1.5 text-xs transition ${tab === t ? "bg-fg text-bg" : "bg-surface2 text-muted hover:text-fg"}`}>
                   {t}

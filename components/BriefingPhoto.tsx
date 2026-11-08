@@ -32,13 +32,14 @@ export function BriefingPhoto() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key]);
 
-  const frame = "relative aspect-[4/3] w-full overflow-hidden rounded-xl border border-line bg-surface2";
+  // Below lg the photo sits under the briefing at full width, so cap its height there.
+  const frame = "relative aspect-[4/3] w-full overflow-hidden rounded-xl border border-line bg-surface2 max-lg:max-h-72";
 
-  if (!res && loading) return <div className={`${frame} skeleton !rounded-xl`} aria-label="Loading photo" />;
+  if (!res && loading) return <div className={`${frame} skeleton !rounded-xl max-lg:hidden`} aria-label="Loading photo" />;
 
   if (!res?.ok) {
     return (
-      <div className={`${frame} flex flex-col items-center justify-center gap-1.5 p-4 text-center text-xs text-muted`}>
+      <div className={`${frame} flex flex-col items-center justify-center gap-1.5 p-4 text-center text-xs text-muted max-lg:aspect-auto max-lg:py-3`}>
         {res?.needsSetup ? <KeyRound className="size-4 text-warn" /> : <ImageOff className="size-4 text-faint" />}
         <p>{res ? res.error : "Couldn’t load photos"}</p>
         {res?.hint && <p className="text-faint">{res.hint}</p>}

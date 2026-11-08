@@ -17,7 +17,7 @@ export default function Home() {
     <main className="mx-auto max-w-[1500px] space-y-5 px-4 py-6 sm:px-6 lg:px-8">
       <Header name={name} />
       <Briefing />
-      <div className="grid gap-5 xl:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 xl:grid-cols-2 [&>*]:min-w-0">
         <div className="xl:col-span-2"><WeatherWidget /></div>
         <div className="xl:col-span-2"><CalendarWidget /></div>
         <div className="xl:col-span-2"><SnowWidget /></div>

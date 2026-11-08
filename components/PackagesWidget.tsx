@@ -18,7 +18,7 @@ const LABEL: Record<PackageStatus, { text: string; tone: string }> = {
 function Row({ p }: { p: PackageItem }) {
   const s = LABEL[p.status];
   return (
-    <li className="flex items-start justify-between gap-3 py-2.5">
+    <li className="flex flex-col gap-1 py-2.5 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
       <div className="min-w-0">
         <div className="flex items-baseline gap-2">
           <span className="truncate text-sm font-medium">{p.merchant}</span>
@@ -29,14 +29,14 @@ function Row({ p }: { p: PackageItem }) {
         </div>
         <div className="truncate text-xs text-muted" title={p.subject}>{p.subject}</div>
       </div>
-      <div className="flex shrink-0 items-center gap-3 text-right">
-        <div>
+      <div className="flex shrink-0 items-center justify-between gap-3 sm:justify-end sm:text-right">
+        <div className="flex min-w-0 flex-wrap items-baseline gap-x-2 sm:block">
           <div className={`text-sm font-medium ${s.tone}`}>{s.text}</div>
           <div className="num text-[11px] text-faint" title={`Email received ${fmtDayTime(p.statusAt)} MT`}>
             {p.eta ? `Est. ${p.eta} · ` : ""}email {timeAgo(p.statusAt)}
           </div>
         </div>
-        <div className="flex flex-col gap-1">
+        <div className="flex gap-3 sm:flex-col sm:gap-1">
           {p.trackUrl && (
             <a href={p.trackUrl} target="_blank" rel="noreferrer" aria-label={`Track on ${p.carrier}`} title={`Latest scan on ${p.carrier}`} className="text-faint hover:text-accent">
               <ExternalLink className="size-3.5" />

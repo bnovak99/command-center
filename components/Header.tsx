@@ -22,24 +22,30 @@ export function Header({ name }: { name: string }) {
   const greeting = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
   const date = now?.toLocaleDateString("en-US", { timeZone: TZ, weekday: "long", month: "long", day: "numeric", year: "numeric" });
   const time = now?.toLocaleTimeString("en-US", { timeZone: TZ, hour: "numeric", minute: "2-digit", second: "2-digit" });
+  // Phones show the time in the date line instead of the large clock.
+  const phoneDate = now?.toLocaleDateString("en-US", { timeZone: TZ, weekday: "short", month: "short", day: "numeric" });
+  const shortTime = now?.toLocaleTimeString("en-US", { timeZone: TZ, hour: "numeric", minute: "2-digit" });
 
   return (
-    <header className="flex flex-wrap items-end justify-between gap-4">
-      <div>
+    <header className="flex items-start justify-between gap-3 sm:items-end sm:gap-4">
+      <div className="min-w-0">
         <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
           {greeting}, {name}
         </h1>
-        <p className="mt-1 text-sm text-muted">{date ?? " "}</p>
+        <p className="mt-1 text-sm text-muted">
+          <span className="hidden sm:inline">{date ?? " "}</span>
+          <span className="sm:hidden">{phoneDate ?? " "}{shortTime && <span className="num"> · {shortTime} MT</span>}</span>
+        </p>
       </div>
-      <div className="flex items-center gap-2">
-        <div className="text-right">
+      <div className="flex shrink-0 items-center gap-2">
+        <div className="hidden text-right sm:block">
           <div className="num text-2xl font-medium leading-none">{time ?? "--:--"}</div>
           <div className="mt-1 text-xs text-muted">Mountain Time</div>
         </div>
         <button
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           aria-label="Toggle theme"
-          className="ml-2 rounded-lg border border-line p-2 text-muted transition hover:bg-surface2 hover:text-fg"
+          className="rounded-lg border border-line p-2 sm:ml-2 text-muted transition hover:bg-surface2 hover:text-fg"
         >
           {theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
         </button>
