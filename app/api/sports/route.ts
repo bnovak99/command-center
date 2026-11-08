@@ -50,6 +50,7 @@ function toGame(t: SportsTeam, e: EspnEvent): SportsGame | null {
       e.links?.find((l) => l.rel?.includes("summary") && l.rel.includes("desktop"))?.href ??
       `https://www.espn.com/${t.league.split("/")[1]}/game/_/gameId/${e.id}`,
   };
+  if (state === "pre" && /TBD/i.test(g.detail)) g.timeTbd = true;
   if (state !== "pre") {
     g.us = num(us.score);
     g.them = num(them.score);

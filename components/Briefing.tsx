@@ -147,7 +147,7 @@ export function Briefing() {
   let sports: React.ReactNode = sp.loading ? pending : unavailable(sp.res);
   if (sp.res?.ok) {
     const asOf = sp.res.fetchedAt;
-    const soon = (ms: number) => (ms - now < 6 * 86400_000 ? `${mtWeekday(ms)} ${shortTime(ms)}` : `${mtDay(ms)}, ${shortTime(ms)}`);
+    const soon = (g: SportsGame) => (g.timeTbd ? `${mtDay(g.start)}, time TBD` : g.start - now < 6 * 86400_000 ? `${mtWeekday(g.start)} ${shortTime(g.start)}` : `${mtDay(g.start)}, ${shortTime(g.start)}`);
     sports = (
       <span className="flex flex-col gap-0.5">
         {sp.res.data.teams.map((t) => {
@@ -161,7 +161,7 @@ export function Briefing() {
                   : t.last ? <><b className={`num ${t.last.result === "W" ? "text-up" : t.last.result === "L" ? "text-down" : ""}`}>{t.last.result} {t.last.us}–{t.last.them}</b> {vs(t.last)} <span className="text-faint">· {mtDay(t.last.start)}{t.last.detail && t.last.detail !== "Final" ? `, ${t.last.detail}` : ""}</span></>
                   : <span className="text-faint">no games played yet</span>}
               </a>
-              {!t.error && !t.live && t.next && <span className="text-faint"> · next {soon(t.next.start)} {vs(t.next)}</span>}
+              {!t.error && !t.live && t.next && <span className="text-faint"> · next {soon(t.next)} {vs(t.next)}</span>}
             </span>
           );
         })}

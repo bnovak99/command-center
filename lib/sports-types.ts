@@ -9,6 +9,7 @@ export type SportsGame = {
   us?: number;
   them?: number;
   result?: "W" | "L" | "T";
+  timeTbd?: boolean; // kickoff/tip time not set yet; `start` is only a placeholder time on the right date
   url: string;
 };
 export type SportsTeamResult = {
