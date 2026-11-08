@@ -18,6 +18,7 @@ import type { StocksData } from "@/lib/stocks-types";
 import type { CalendarData } from "@/lib/calendar-types";
 import type { PackagesData, PackageStatus } from "@/lib/packages-types";
 import type { I70Data } from "@/lib/i70-types";
+import type { SportsData, SportsGame } from "@/lib/sports-types";
 import type { ApiResponse } from "@/lib/types";
 
 type Line = { label: string; text: React.ReactNode; tone?: "alert" };
@@ -27,6 +28,9 @@ const shortTime = (ms: number) => fmtTime(ms).replace(":00", "");
 const inch = (n: number) => `${n.toFixed(1)}"`;
 // Most actionable first; delivered packages are left out of the briefing.
 const PKG_ORDER: PackageStatus[] = ["out_for_delivery", "exception", "in_transit", "shipped", "ordered"];
+const mtDay = (ms: number) => new Date(ms).toLocaleDateString("en-US", { timeZone: "America/Denver", month: "short", day: "numeric" });
+const mtWeekday = (ms: number) => new Date(ms).toLocaleDateString("en-US", { timeZone: "America/Denver", weekday: "short" });
+const vs = (g: SportsGame) => <>{g.home ? "vs" : "@"} {g.opponent}</>;
 const PKG_LABEL: Record<PackageStatus, string> = { out_for_delivery: "out for delivery", exception: "needs attention", in_transit: "in transit", shipped: "shipped", ordered: "ordered", delivered: "delivered" };
 
 function useNow(ms = 60_000) {
@@ -49,6 +53,7 @@ export function Briefing() {
   const c = useApi<CalendarData>("/api/calendar", REFRESH.calendar);
   const p = useApi<PackagesData>("/api/packages", REFRESH.packages);
   const r = useApi<I70Data>("/api/i70", REFRESH.i70);
+  const sp = useApi<SportsData>("/api/sports", REFRESH.sports);
 
   const lines: Line[] = [];
 
@@ -137,6 +142,33 @@ export function Briefing() {
     );
   }
   lines.push({ label: "I-70", text: road, tone: roadAlerts.length ? "alert" : undefined });
+
+  // Sports: live game if one is on, else the latest final; plus the next game (ESPN)
+  let sports: React.ReactNode = sp.loading ? pending : unavailable(sp.res);
+  if (sp.res?.ok) {
+    const asOf = sp.res.fetchedAt;
+    const soon = (g: SportsGame) => (g.timeTbd ? `${mtDay(g.start)}, time TBD` : g.start - now < 6 * 86400_000 ? `${mtWeekday(g.start)} ${shortTime(g.start)}` : `${mtDay(g.start)}, ${shortTime(g.start)}`);
+    sports = (
+      <span className="flex flex-col gap-0.5">
+        {sp.res.data.teams.map((t) => {
+          const g = t.live ?? t.last;
+          return (
+            <span key={t.id}>
+              <a href={g?.url ?? t.url} target="_blank" rel="noreferrer" className="hover:text-accent">
+                <span className="text-muted">{t.name}</span>{" "}
+                {t.error ? <span className="text-faint">unavailable</span>
+                  : t.live ? <><b className="num">Live {t.live.us ?? "–"}–{t.live.them ?? "–"}</b> {vs(t.live)} <span className="text-faint">· {t.live.detail}, as of {fmtTime(asOf)}</span></>
+                  : t.last ? <><b className={`num ${t.last.result === "W" ? "text-up" : t.last.result === "L" ? "text-down" : ""}`}>{t.last.result} {t.last.us}–{t.last.them}</b> {vs(t.last)} <span className="text-faint">· {mtDay(t.last.start)}{t.last.detail && t.last.detail !== "Final" ? `, ${t.last.detail}` : ""}</span></>
+                  : <span className="text-faint">no games played yet</span>}
+              </a>
+              {!t.error && !t.live && t.next && <span className="text-faint"> · next {soon(t.next)} {vs(t.next)}</span>}
+            </span>
+          );
+        })}
+      </span>
+    );
+  }
+  lines.push({ label: "Scores", text: sports });
 
   // Markets
   let mk: React.ReactNode = m.loading ? pending : unavailable(m.res);

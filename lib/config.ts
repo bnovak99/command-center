@@ -96,7 +96,7 @@ export const DEFAULT_YT_TOPICS = [
 export const DEFAULT_YT_CHANNELS: string[] = [];
 
 // Auto-refresh intervals (ms)
-export const REFRESH = { weather: 15 * 60_000, snow: 30 * 60_000, news: 30 * 60_000, stocksOpen: 60_000, stocksClosed: 15 * 60_000, youtube: 3 * 60 * 60_000, i70: 10 * 60_000, drive: 10 * 60_000, calendar: 10 * 60_000, packages: 15 * 60_000, photo: 60 * 60_000 };
+export const REFRESH = { weather: 15 * 60_000, snow: 30 * 60_000, news: 30 * 60_000, stocksOpen: 60_000, stocksClosed: 15 * 60_000, youtube: 3 * 60 * 60_000, i70: 10 * 60_000, drive: 10 * 60_000, calendar: 10 * 60_000, packages: 15 * 60_000, photo: 60 * 60_000, sports: 10 * 60_000 };
 
 // Briefing photo: a random personal photo, changed every `rotateMs`. Files live in the gitignored photos/ folder
 // locally and in a private Vercel Blob store (under blobPrefix) on the deployed site.
@@ -125,3 +125,12 @@ export const DRIVE_DESTINATIONS = [
 
 // I-70 mountain corridor for chain-law / closure alerts (CDOT COtrip feed, no key). Mile points: Golden/C-470 ≈ 260, Avon/Beaver Creek ≈ 167.
 export const I70_CORRIDOR = { route: "I-70", label: "I-70 Golden to Avon", minMp: 160, maxMp: 262 };
+
+// Sports: latest result and next game per team, from ESPN's public (keyless) team schedule JSON.
+// `league` is ESPN's sport/league path; `team` is ESPN's team abbreviation in that league.
+export type SportsTeam = { id: string; name: string; league: "basketball/nba" | "football/nfl"; team: string; url: string };
+export const SPORTS_TEAMS: SportsTeam[] = [
+  { id: "nuggets", name: "Nuggets", league: "basketball/nba", team: "den", url: "https://www.espn.com/nba/team/schedule/_/name/den" },
+  { id: "broncos", name: "Broncos", league: "football/nfl", team: "den", url: "https://www.espn.com/nfl/team/schedule/_/name/den" },
+  { id: "lions", name: "Lions", league: "football/nfl", team: "det", url: "https://www.espn.com/nfl/team/schedule/_/name/det" },
+];
