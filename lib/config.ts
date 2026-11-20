@@ -134,3 +134,7 @@ export const SPORTS_TEAMS: SportsTeam[] = [
   { id: "broncos", name: "Broncos", league: "football/nfl", team: "den", url: "https://www.espn.com/nfl/team/schedule/_/name/den" },
   { id: "lions", name: "Lions", league: "football/nfl", team: "det", url: "https://www.espn.com/nfl/team/schedule/_/name/det" },
 ];
+
+/** The live site has no login, so anyone with the link can open it. Calendar, Packages and the
+ *  briefing photo come from private accounts; they run locally but stay off on Vercel unless this is true. */
+export const SHOW_PRIVATE_WIDGETS_ONLINE = false;

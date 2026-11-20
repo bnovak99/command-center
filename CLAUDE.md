@@ -19,7 +19,7 @@ Prioritize: real data, visual quality, simplicity, easy maintenance.
 - Each widget is independent: its own loading skeleton, error state, "needs setup" state (missing key), empty state, refresh button, source label, and "Updated 9:24 PM" timestamp. One failing API must never break the page.
 - All configurable lists (locations, resorts, feeds, default watchlist, default YouTube topics) live in `lib/config.ts`.
 - User preferences (theme, watchlist, YouTube topics, sort choices) stored in localStorage, wrapped in try/catch, with Export/Import JSON in a settings menu (localStorage doesn't carry from localhost to the Vercel URL).
-- Optional password gate: if `DASHBOARD_PASSWORD` is set, middleware requires HTTP Basic Auth. If unset (local), no gate.
+- No login (password gate removed 2026-11-20). Private widgets (calendar, packages, photo) are off on Vercel unless `SHOW_PRIVATE_WIDGETS_ONLINE` in `lib/config.ts` is true.
 - Adding a widget = new config entry + new API route + new component. Keep that pattern.
 
 ## Conventions
@@ -79,7 +79,7 @@ Resort links (all four are Vail Resorts; same URL pattern — verify each link w
 Powder Alert threshold: ≥ 6 inches forecast in the next 24 hours.
 
 ## Env vars (.env.local, never committed; mirror in .env.example)
-FINNHUB_API_KEY, YOUTUBE_API_KEY, DISPLAY_NAME (default "Brian"), DASHBOARD_PASSWORD (optional), NWS_USER_AGENT
+FINNHUB_API_KEY, YOUTUBE_API_KEY, DISPLAY_NAME (default "Brian"), NWS_USER_AGENT
 
 ## Workflow
 - Make sensible technical decisions without asking for approval on small details. Ask only for paid services, hard-to-undo or scope-changing decisions, or when blocked (e.g., a missing API key).
