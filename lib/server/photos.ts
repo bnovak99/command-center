@@ -2,6 +2,7 @@ import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { list, get } from "@vercel/blob";
 import { SetupError } from "@/lib/server/cache";
+import { guardPrivate } from "@/lib/server/private";
 import { PHOTOS } from "@/lib/config";
 import type { PhotoData } from "@/lib/photo-types";
 
@@ -26,11 +27,7 @@ function credential() {
 }
 const hasBlob = () => !!(rwToken() || process.env.BLOB_STORE_ID);
 
-function guard() {
-  if (process.env.VERCEL && !process.env.DASHBOARD_PASSWORD) {
-    throw new SetupError("Photos are hidden because this deployment has no password.", "Set DASHBOARD_PASSWORD in Vercel → Settings → Environment Variables, then redeploy.");
-  }
-}
+const guard = () => guardPrivate("Personal photos");
 
 async function localPhotos(): Promise<PhotoData | null> {
   if (process.env.VERCEL) return null;

@@ -22,7 +22,6 @@ npm run build                # production build check
 | `FINNHUB_API_KEY` | for Stocks | Free at <https://finnhub.io/register>. Copy the key from the dashboard (a ~20-character string). Free tier: 60 calls/min, delayed/limited data, no index symbols (hence ETF proxies). |
 | `YOUTUBE_API_KEY` | for YouTube | Google Cloud Console → new project → enable **YouTube Data API v3** → Credentials → API key. Free quota 10,000 units/day. |
 | `DISPLAY_NAME` | no | Greeting name (default `Brian`). |
-| `DASHBOARD_PASSWORD` | no | If set, every request needs HTTP Basic Auth (any username, this password). Unset locally = no gate. |
 | `NWS_USER_AGENT` | recommended | api.weather.gov requires a descriptive User-Agent, e.g. `PersonalCommandCenter (you@example.com)`. |
 | `BLOB_STORE_ID` | for the briefing photo on Vercel | Added automatically when you connect a private Blob store to the project; the deployed site then signs in to the store by itself. On your Mac it comes from `npx vercel env pull .env.vercel` (see Briefing photo). |
 
@@ -52,10 +51,10 @@ Lift/trail counts and base depth have no public API — each resort card links t
 - **Server cache** (`lib/server/cache.ts`): in-memory TTL + in-flight dedupe. Failed refresh with an older value → returned with `stale: true` and shown as a warning. `?refresh=1` respects a minimum age (30 s; 15 min for YouTube) so refresh spam can’t burn quotas.
 - **Config** lives in `lib/config.ts` (locations, resorts, feeds, default watchlist/topics).
 - **Preferences** (theme, watchlist, YouTube topics, sort) are in `localStorage`; use Settings → Export/Import JSON to carry them to a deployed URL.
-- **Next.js 16** renamed middleware to `proxy.ts`; the password gate lives there.
+- **No login.** The site has no password gate, so anyone with the URL can open it. Private widgets (Calendar, Packages, briefing photo) refuse to serve data on Vercel unless `SHOW_PRIVATE_WIDGETS_ONLINE` is `true` in `lib/config.ts`.
 - News ranking: near-duplicate headlines (token Jaccard ≥ 0.5) are clustered; score = outlets × 3 + recency + category weight.
-- **Calendar privacy**: iCal URLs stay server-side in env vars and never reach the browser or error messages; `/api/calendar` is sent `Cache-Control: private, no-store`. On Vercel the route refuses to return events unless `DASHBOARD_PASSWORD` is set. The eye icon on the widget swaps titles for "Busy" on that device (for when someone else can see the screen).
-- **Package privacy**: Gmail credentials stay server-side. The widget shows sender, carrier, status, and only the last 4 digits of tracking numbers; no addresses or email bodies reach the browser. `/api/packages` is sent `Cache-Control: private, no-store`, and on Vercel it refuses to return anything unless `DASHBOARD_PASSWORD` is set.
+- **Calendar privacy**: iCal URLs stay server-side in env vars and never reach the browser or error messages; `/api/calendar` is sent `Cache-Control: private, no-store`. On Vercel the route refuses to return events unless `SHOW_PRIVATE_WIDGETS_ONLINE` is on. The eye icon on the widget swaps titles for "Busy" on that device (for when someone else can see the screen).
+- **Package privacy**: Gmail credentials stay server-side. The widget shows sender, carrier, status, and only the last 4 digits of tracking numbers; no addresses or email bodies reach the browser. `/api/packages` is sent `Cache-Control: private, no-store`, and on Vercel it refuses to return anything unless `SHOW_PRIVATE_WIDGETS_ONLINE` is on.
 - Stock index tiles use SPY/QQQ/DIA/IWM and are labeled as ETF proxies.
 - The dashboard needs a running Node server (in-memory cache); on Vercel each warm function instance has its own cache.
 
@@ -69,12 +68,12 @@ The right side of the Daily briefing shows a random photo from your own collecti
   2. On your Mac, run `npx vercel link` once (pick this project), then `npx vercel env pull .env.vercel`. That file holds `BLOB_STORE_ID` and a short-lived `VERCEL_OIDC_TOKEN` (about 12 hours; pull again when it expires). It's gitignored. Older stores can instead put a `BLOB_READ_WRITE_TOKEN` in `.env.local`.
   3. Run `npm run photos:sync`. It uploads new or changed photos from `photos/` and removes ones you deleted. Re-run it whenever you change the folder.
   4. Redeploy once so the project picks up the store connection.
-- On Vercel the photo route refuses to serve anything unless `DASHBOARD_PASSWORD` is set.
+- On Vercel the photo route refuses to serve anything unless `SHOW_PRIVATE_WIDGETS_ONLINE` is on.
 
 ## Deploy to Vercel (Hobby)
 
 1. Push this folder to a Git repo and import it at vercel.com/new.
-2. Add the environment variables above (Project → Settings → Environment Variables). Set `DASHBOARD_PASSWORD` so the public URL isn’t open (the Calendar widget stays hidden without it).
+2. Add the environment variables above (Project → Settings → Environment Variables). The site has no login, so Calendar, Packages and the photo stay hidden there unless you turn on `SHOW_PRIVATE_WIDGETS_ONLINE`.
 3. Deploy. Then import your preferences JSON via Settings on the live site.
 
 ## Adding a widget

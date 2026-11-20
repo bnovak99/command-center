@@ -1,5 +1,6 @@
 import ICAL from "ical.js";
 import { handle, SetupError } from "@/lib/server/cache";
+import { guardPrivate } from "@/lib/server/private";
 import { CALENDAR_DAYS } from "@/lib/config";
 import { addDays, mtDateKey, mtMidnight } from "@/lib/tz";
 import type { CalEvent, CalendarData, CalSourceStatus } from "@/lib/calendar-types";
@@ -129,10 +130,7 @@ function parse(label: string, text: string, rangeStart: number, rangeEnd: number
 }
 
 async function fetchCalendar(): Promise<CalendarData> {
-  // Private data: never serve it from a deployment that anyone with the link can open.
-  if (process.env.VERCEL && !process.env.DASHBOARD_PASSWORD) {
-    throw new SetupError("Calendar is hidden because this deployment has no password.", "Set DASHBOARD_PASSWORD in Vercel → Project → Settings → Environment Variables, then redeploy.");
-  }
+  guardPrivate("Calendar events");
   const list = sources();
   if (!list.length) {
     throw new SetupError(

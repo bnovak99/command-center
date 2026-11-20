@@ -3,6 +3,7 @@ import { simpleParser } from "mailparser";
 import { handle, SetupError } from "@/lib/server/cache";
 import { buildPackages, type MailInput } from "@/lib/server/packages-parse";
 import { PACKAGES } from "@/lib/config";
+import { guardPrivate } from "@/lib/server/private";
 import type { PackagesData } from "@/lib/packages-types";
 
 export const dynamic = "force-dynamic";
@@ -17,10 +18,7 @@ async function fetchPackages(): Promise<PackagesData> {
       "Create an app password at myaccount.google.com/apppasswords (needs 2-Step Verification). Read-only use; mail is never changed.",
     );
   }
-  // Tracking data is private: on a deployed site, refuse unless the password gate is on.
-  if (process.env.VERCEL && !process.env.DASHBOARD_PASSWORD) {
-    throw new SetupError("Package tracking is off on this deployment because DASHBOARD_PASSWORD isn't set.", "Set DASHBOARD_PASSWORD in Vercel → Settings → Environment Variables, then redeploy.");
-  }
+  guardPrivate("Packages");
 
   const client = new ImapFlow({ host: "imap.gmail.com", port: 993, secure: true, auth: { user, pass }, logger: false, socketTimeout: 20_000 });
   try {
